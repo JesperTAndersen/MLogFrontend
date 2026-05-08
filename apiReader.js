@@ -77,3 +77,7 @@ export async function apiRequest(url, { method = "GET", body } = {}) {
 export function getMe() {
   return apiRequest("/employees/me");
 }
+
+export function getAssets() {
+  return apiRequest("/assets");
+}

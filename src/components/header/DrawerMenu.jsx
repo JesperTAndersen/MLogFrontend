@@ -24,10 +24,10 @@ function DrawerMenu({ isMenuOpen, onClose }) {
           <NavLink to="/employees" onClick={onClose}>
             User List
           </NavLink>
-          <NavLink to="/placeholder" onClick={onClose}>
+          <NavLink to="/assets" onClick={onClose}>
             Manage Assets(PLACEHOLDER)
           </NavLink>
-          <NavLink to="/placeholder" onClick={onClose}>
+          <NavLink to="/assets" onClick={onClose}>
             Manager Users(PLACEHOLDER)
           </NavLink>
           <NavLink to="/login" onClick={exitApp}>
