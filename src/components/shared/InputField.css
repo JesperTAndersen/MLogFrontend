@@ -1,0 +1,10 @@
+.label {
+  display: block;
+
+}
+
+
+.label input {
+  display: block;
+  margin-top: 4px;
+}
