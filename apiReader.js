@@ -78,6 +78,7 @@ export function getMe() {
   return apiRequest("/employees/me");
 }
 
-export function getAssets() {
-  return apiRequest("/assets");
+export function getAssets(active = null) {
+    const url = active !== null ? `/assets?active=${active}` : "/assets";
+    return apiRequest(url);
 }
