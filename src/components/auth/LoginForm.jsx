@@ -3,7 +3,7 @@ import InputField from "../shared/InputField";
 import { useState } from "react";
 import "./LoginForm.css";
 import { useOutletContext, useNavigate } from "react-router";
-import { login } from "../../../apiReader";
+import { login } from "../../utils/apiReader";
 
 function LoginForm() {
   const [email, setEmail] = useState("");

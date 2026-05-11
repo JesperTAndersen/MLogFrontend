@@ -79,6 +79,20 @@ export function getMe() {
 }
 
 export function getAssets(active = null) {
-    const url = active !== null ? `/assets?active=${active}` : "/assets";
-    return apiRequest(url);
+  const url = active !== null ? `/assets?active=${active}` : "/assets";
+  return apiRequest(url);
+}
+
+export function getAssetById(id) {
+  return apiRequest(`/assets/${id}`);
+}
+
+export function getLogsForAsset(id, status = null, taskType = null) {
+  const params = new URLSearchParams();
+  if (status) params.set("status", status);
+  if (taskType) params.set("taskType", taskType);
+
+  const qs = params.toString();
+  const url = `/assets/${id}/logs${qs ? `?${qs}` : ""}`;
+  return apiRequest(url);
 }

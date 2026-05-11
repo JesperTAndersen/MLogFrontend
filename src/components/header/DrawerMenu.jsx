@@ -1,6 +1,6 @@
 import { NavLink, useOutletContext } from "react-router";
 import "./DrawerMenu.css";
-import { logout } from "../../../apiReader";
+import { logout } from "../../utils/apiReader";
 
 function DrawerMenu({ isMenuOpen, onClose }) {
   const { setAuthUser } = useOutletContext();

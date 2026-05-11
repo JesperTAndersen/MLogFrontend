@@ -1,6 +1,6 @@
 import { Outlet } from "react-router";
 import { useEffect, useState } from "react";
-import { getMe } from "../../../apiReader";
+import { getMe } from "../../utils/apiReader";
 
 function RootLayout() {
   const [hasToken] = useState(() => Boolean(localStorage.getItem("jwt")));

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import AssetCard from "../components/assets/AssetCard";
-import { getAssets } from "../../apiReader";
+import { getAssets } from "../utils/apiReader";
+import "./AssetList.css";
 
 function AssetList() {
   const [assets, setAssets] = useState([]);
@@ -33,19 +34,21 @@ function AssetList() {
 
   return (
     <>
-      <h1> Asset List page</h1>
-      <label>
-        Filter by status:
-        <select
-          value={activeFilter ?? "null"}
-          name="choice"
-          onChange={statusFilter}
-        >
-          <option value="null">Status</option>
-          <option value="true">Active</option>
-          <option value="false">Inactive</option>
-        </select>
-      </label>
+      <div className="asset-list-toolbar">
+        <label className="asset-list-filter">
+          Filter by status
+          <select
+            className="asset-list-filter-select"
+            value={activeFilter ?? "null"}
+            name="choice"
+            onChange={statusFilter}
+          >
+            <option value="null">All</option>
+            <option value="true">Active</option>
+            <option value="false">Inactive</option>
+          </select>
+        </label>
+      </div>
       {assets.map((asset) => (
         <AssetCard key={asset.id} asset={asset} />
       ))}
