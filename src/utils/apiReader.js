@@ -10,7 +10,11 @@ function readToken() {
   return localStorage.getItem(TOKEN_KEY);
 }
 
-export async function login(credentials) {
+export function removeToken() {
+    localStorage.removeItem(TOKEN_KEY);
+}
+
+export async function loginAPI(credentials) {
   const response = await fetch(`${AUTH_URL}/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -33,10 +37,6 @@ export async function login(credentials) {
 
   setToken(token);
   return { authUser };
-}
-
-export function logout() {
-  localStorage.removeItem(TOKEN_KEY);
 }
 
 export async function apiRequest(url, { method = "GET", body } = {}) {

@@ -6,7 +6,6 @@ import AssetList from "./pages/AssetList";
 import AssetDetail from "./pages/AssetDetail";
 import UserProfile from "./pages/UserProfile";
 import Header from "./components/header/Header";
-import RootLayout from "./components/shared/RootLayout";
 
 function App() {
   return (
@@ -14,7 +13,7 @@ function App() {
       <div className="phone-frame">
         <div className="app-content">
           <Routes>
-            <Route path="/" element={<RootLayout />}>
+            <Route path="/">
               <Route index element={<Navigate to="login" replace />} />
               <Route path="login" element={<Login />} />
 

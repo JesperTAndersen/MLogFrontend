@@ -1,13 +1,12 @@
-import { NavLink, useOutletContext } from "react-router";
+import { NavLink } from "react-router";
 import "./DrawerMenu.css";
-import { logout } from "../../utils/apiReader";
+import { useAuth } from "../../context/AuthContext";
 
 function DrawerMenu({ isMenuOpen, onClose }) {
-  const { setAuthUser } = useOutletContext();
+  const { logout } = useAuth();
 
   function exitApp() {
     logout();
-    setAuthUser(null);
     onClose();
   }
 

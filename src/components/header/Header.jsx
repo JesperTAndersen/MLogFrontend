@@ -1,7 +1,8 @@
-import { Outlet, useLocation, useOutletContext } from "react-router";
+import { Outlet, useLocation } from "react-router";
 import { useState } from "react";
 import DrawerMenu from "./DrawerMenu";
 import NavBar from "./NavBar";
+import { useAuth } from "../../context/AuthContext";
 
 function getPageTitleFromPath(pathname) {
   if (pathname === "/assets") return "Assets";
@@ -16,7 +17,7 @@ function getPageTitleFromPath(pathname) {
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { authUser, setAuthUser, authReady } = useOutletContext();
+  const { authUser, authReady } = useAuth();
   const { pathname } = useLocation();
 
   const username = authReady ? (authUser ? authUser.firstName : "Guest") : "…";
@@ -28,13 +29,8 @@ function Header() {
   return (
     <>
       <NavBar username={username} onToggle={toggleMenu} pageTitle={pageTitle} />
-      <DrawerMenu
-        isMenuOpen={isMenuOpen}
-        onClose={closeMenu}
-        authUser={authUser}
-        setAuthUser={setAuthUser}
-      />
-      <Outlet context={{ authUser, setAuthUser, authReady }} />
+      <DrawerMenu isMenuOpen={isMenuOpen} onClose={closeMenu} />
+      <Outlet context={{}} />
     </>
   );
 }
