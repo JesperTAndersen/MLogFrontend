@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./LogCard.css";
-import { formatDaDateTime } from "../../utils/formatDaDateTime";
+import { formatDateTime } from "../../utils/formatDateTime";
 
 const STATUS_CLASS = {
   DONE: "log-card-status--success",
@@ -17,7 +17,7 @@ function LogCard({ log }) {
 
   const statusLabel = toStatusLabel(log?.status);
   const statusClass = STATUS_CLASS[log?.status] ?? "";
-  const performedDateText = formatDaDateTime(log?.performedDate);
+  const performedDateText = formatDateTime(log?.performedDate);
 
   const toggleExpanded = () => setExpanded((prev) => !prev);
 

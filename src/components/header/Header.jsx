@@ -2,7 +2,7 @@ import { Outlet, useLocation } from "react-router";
 import { useState } from "react";
 import DrawerMenu from "./DrawerMenu";
 import NavBar from "./NavBar";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../context/authContext";
 
 function getPageTitleFromPath(pathname) {
   if (pathname === "/assets") return "Assets";

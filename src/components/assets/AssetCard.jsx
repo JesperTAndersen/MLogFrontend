@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router";
 import "./AssetCard.css";
-import { formatDaDateTime } from "../../utils/formatDaDateTime";
+import { formatDateTime } from "../../utils/formatDateTime";
 
 function AssetCard({ asset }) {
   const navigate = useNavigate();
@@ -24,7 +24,7 @@ function AssetCard({ asset }) {
             </span>
           )}
         </p>
-        <p className="asset-card-date">{formatDaDateTime(asset.lastLogDate)}</p>
+        <p className="asset-card-date">{formatDateTime(asset.lastLogDate)}</p>
       </section>
     </>
   );

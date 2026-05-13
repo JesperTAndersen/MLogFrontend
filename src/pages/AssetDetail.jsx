@@ -1,9 +1,24 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { Link, useParams } from "react-router";
 import { getAssetById, getLogsForAsset } from "../utils/apiReader";
 import LogCard from "../components/logsComponents/LogCard";
+import Select from "../components/shared/Select";
 import "./AssetDetail.css";
-import { formatDaDateTime } from "../utils/formatDaDateTime";
+import { formatDateTime } from "../utils/formatDateTime";
+import { useAuth } from "../context/authContext";
+
+const LOG_STATUS_FILTER_OPTIONS = [
+  { value: "", label: "All" },
+  { value: "FAILED", label: "Failed" },
+  { value: "DONE", label: "Done" },
+];
+
+const LOG_TASK_TYPE_FILTER_OPTIONS = [
+  { value: "", label: "All" },
+  { value: "MAINTENANCE", label: "Maintenance" },
+  { value: "PRODUCTION", label: "Production" },
+  { value: "ERROR", label: "Error" },
+];
 
 function AssetDetail() {
   const [asset, setAsset] = useState(null);
@@ -12,6 +27,8 @@ function AssetDetail() {
   const [error, setError] = useState(null);
   const [statusFilter, setStatusFilter] = useState(null);
   const [taskTypeFilter, setTaskTypeFilter] = useState(null);
+
+  const { hasRole } = useAuth();
 
   const { id } = useParams();
 
@@ -68,41 +85,40 @@ function AssetDetail() {
 
           {asset?.lastLogDate ? (
             <span className="asset-detail-last-log">
-              Last log: {formatDaDateTime(asset.lastLogDate)}
+              Last log: {formatDateTime(asset.lastLogDate)}
             </span>
           ) : null}
         </div>
+
+        {hasRole("TECHNICIAN") ? (
+          <div className="asset-detail-actions">
+            <Link to={`/assets/${id}/createlog`} className="asset-detail-create-log">
+              Create log
+            </Link>
+          </div>
+        ) : null}
       </section>
 
       <section className="asset-detail-logs">
         <>
           <div className="asset-detail-toolbar">
-            <label className="asset-detail-filter">
-              Status
-              <select
-                className="asset-detail-filter-select"
-                value={statusFilter ?? ""}
-                onChange={handleStatusChange}
-              >
-                <option value="">All</option>
-                <option value="FAILED">Failed</option>
-                <option value="DONE">Done</option>
-              </select>
-            </label>
+            <Select
+              labelClassName="asset-detail-filter"
+              labelText="Status"
+              selectClassName="asset-detail-filter-select"
+              value={statusFilter ?? ""}
+              onChange={handleStatusChange}
+              options={LOG_STATUS_FILTER_OPTIONS}
+            />
 
-            <label className="asset-detail-filter">
-              Task type
-              <select
-                className="asset-detail-filter-select"
-                value={taskTypeFilter ?? ""}
-                onChange={handleTaskTypeChange}
-              >
-                <option value="">All</option>
-                <option value="MAINTENANCE">Maintenance</option>
-                <option value="PRODUCTION">Production</option>
-                <option value="ERROR">Error</option>
-              </select>
-            </label>
+            <Select
+              labelClassName="asset-detail-filter"
+              labelText="Task type"
+              selectClassName="asset-detail-filter-select"
+              value={taskTypeFilter ?? ""}
+              onChange={handleTaskTypeChange}
+              options={LOG_TASK_TYPE_FILTER_OPTIONS}
+            />
           </div>
 
           {logs.length === 0 ? (

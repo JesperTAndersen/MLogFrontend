@@ -4,7 +4,7 @@ import { useState } from "react";
 import "./LoginForm.css";
 import { useNavigate } from "react-router";
 import { loginAPI } from "../../utils/apiReader";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../context/authContext";
 
 function LoginForm() {
   const [email, setEmail] = useState("");

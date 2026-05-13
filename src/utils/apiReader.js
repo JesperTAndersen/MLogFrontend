@@ -11,7 +11,7 @@ function readToken() {
 }
 
 export function removeToken() {
-    localStorage.removeItem(TOKEN_KEY);
+  localStorage.removeItem(TOKEN_KEY);
 }
 
 export async function loginAPI(credentials) {
@@ -95,4 +95,15 @@ export function getLogsForAsset(id, status = null, taskType = null) {
   const qs = params.toString();
   const url = `/assets/${id}/logs${qs ? `?${qs}` : ""}`;
   return apiRequest(url);
+}
+
+export function createLog(assetId, logBody) {
+  if (assetId === undefined || assetId === null || assetId === "") {
+    throw new Error("createLog(assetId, logBody) requires an assetId");
+  }
+
+  return apiRequest(`/assets/${assetId}/logs`, {
+    method: "POST",
+    body: logBody,
+  });
 }

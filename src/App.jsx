@@ -6,6 +6,8 @@ import AssetList from "./pages/AssetList";
 import AssetDetail from "./pages/AssetDetail";
 import UserProfile from "./pages/UserProfile";
 import Header from "./components/header/Header";
+import ProtectedRoute from "./components/shared/ProtectedRoute";
+import CreateLog from "./components/logsComponents/CreateLog";
 
 function App() {
   return (
@@ -16,12 +18,21 @@ function App() {
             <Route path="/">
               <Route index element={<Navigate to="login" replace />} />
               <Route path="login" element={<Login />} />
-
-              <Route element={<Header />}>
-                <Route path="assets" element={<AssetList />} />
-                <Route path="employees" element={<EmployeeList />} />
-                <Route path="assets/:id/logs" element={<AssetDetail />} />
-                <Route path="users/me" element={<UserProfile />} />
+              <Route element={<ProtectedRoute />}>
+                <Route element={<Header />}>
+                  <Route path="assets" element={<AssetList />} />
+                  <Route path="employees" element={<EmployeeList />} />
+                  <Route path="assets/:id/logs" element={<AssetDetail />} />
+                  <Route
+                    element={<ProtectedRoute requiredRole={"TECHNICIAN"} />}
+                  >
+                    <Route
+                      path="assets/:id/createlog"
+                      element={<CreateLog />}
+                    />
+                  </Route>
+                  <Route path="users/me" element={<UserProfile />} />
+                </Route>
               </Route>
             </Route>
           </Routes>

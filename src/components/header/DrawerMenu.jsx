@@ -1,6 +1,6 @@
 import { NavLink } from "react-router";
 import "./DrawerMenu.css";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../context/authContext";
 
 function DrawerMenu({ isMenuOpen, onClose }) {
   const { logout } = useAuth();

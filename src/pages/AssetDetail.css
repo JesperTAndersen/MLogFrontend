@@ -35,6 +35,34 @@
   gap: 12px;
 }
 
+.asset-detail-actions {
+  margin-top: 12px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.asset-detail-create-log {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  padding: 0 14px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  text-decoration: none;
+  color: var(--color-inverse-text);
+  background: var(--color-primary);
+  border: 1px solid color-mix(in srgb, var(--color-primary) 70%, var(--color-border));
+}
+
+.asset-detail-create-log:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px
+    color-mix(in srgb, var(--color-primary-light) 25%, transparent);
+}
+
 .asset-detail-status {
   display: inline-flex;
   align-items: center;

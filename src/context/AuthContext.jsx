@@ -1,9 +1,8 @@
-import { createContext, useEffect, useContext, useState } from "react";
+import { useEffect, useState } from "react";
+import { AuthContext } from "./authContext";
 import { getMe, removeToken } from "../utils/apiReader";
 
-export const AuthContext = createContext();
-
-export function AuthProvider({ children }) {
+export default function AuthProvider({ children }) {
   const [hasToken] = useState(() => Boolean(localStorage.getItem("jwt")));
   const [authUser, setAuthUser] = useState(null);
   const [authReady, setAuthReady] = useState(() => !hasToken);
@@ -18,6 +17,17 @@ export function AuthProvider({ children }) {
     setAuthUser(null);
   }
 
+  function hasRole(requiredRole) {
+    if (!authUser) return false;
+    const roleHierarchy = {
+      ADMIN: ["ADMIN", "MANAGER", "TECHNICIAN", "AUTHENTICATED"],
+      MANAGER: ["MANAGER", "TECHNICIAN", "AUTHENTICATED"],
+      TECHNICIAN: ["TECHNICIAN", "AUTHENTICATED"],
+    };
+    const userRoles = roleHierarchy[authUser.role] || [];
+    return userRoles.includes(requiredRole);
+  }
+
   useEffect(() => {
     if (!hasToken) return;
 
@@ -28,13 +38,10 @@ export function AuthProvider({ children }) {
   }, [hasToken]);
 
   return (
-    <AuthContext.Provider value={{ authUser, authReady, login, logout }}>
+    <AuthContext.Provider
+      value={{ authUser, authReady, login, logout, hasRole }}
+    >
       {children}
     </AuthContext.Provider>
   );
-}
-export default AuthProvider;
-
-export function useAuth() {
-  return useContext(AuthContext);
 }

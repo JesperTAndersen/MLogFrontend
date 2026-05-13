@@ -1,7 +1,14 @@
 import { useEffect, useState } from "react";
 import AssetCard from "../components/assets/AssetCard";
+import Select from "../components/shared/Select";
 import { getAssets } from "../utils/apiReader";
 import "./AssetList.css";
+
+const ASSET_STATUS_FILTER_OPTIONS = [
+  { value: "null", label: "All" },
+  { value: "true", label: "Active" },
+  { value: "false", label: "Inactive" },
+];
 
 function AssetList() {
   const [assets, setAssets] = useState([]);
@@ -35,19 +42,14 @@ function AssetList() {
   return (
     <>
       <div className="asset-list-toolbar">
-        <label className="asset-list-filter">
-          Filter by status
-          <select
-            className="asset-list-filter-select"
-            value={activeFilter ?? "null"}
-            name="choice"
-            onChange={statusFilter}
-          >
-            <option value="null">All</option>
-            <option value="true">Active</option>
-            <option value="false">Inactive</option>
-          </select>
-        </label>
+        <Select
+          labelClassName="asset-list-filter"
+          labelText="Filter by status"
+          selectClassName="asset-list-filter-select"
+          value={activeFilter ?? "null"}
+          onChange={statusFilter}
+          options={ASSET_STATUS_FILTER_OPTIONS}
+        />
       </div>
       {assets.map((asset) => (
         <AssetCard key={asset.id} asset={asset} />
