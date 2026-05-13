@@ -1,7 +1,7 @@
 import Button from "../shared/Button";
 import InputField from "../shared/InputField";
 import { useState } from "react";
-import "./LoginForm.css";
+import styles from "./LoginForm.module.css";
 import { useNavigate } from "react-router";
 import { loginAPI } from "../../utils/apiReader";
 import { useAuth } from "../../context/authContext";
@@ -27,7 +27,7 @@ function LoginForm() {
 
   return (
     <>
-      <form className="login-form" onSubmit={handleLogin}>
+      <form className={styles.form} onSubmit={handleLogin}>
         <InputField
           label="Email"
           type="text"
@@ -44,8 +44,8 @@ function LoginForm() {
           placeholder="***********"
           required
         ></InputField>
-        <Button className="login-btn" buttonText="Login"></Button>
-        {error && <p className="login-error">{error}</p>}
+        <Button buttonText="Login"></Button>
+        {error && <p className={styles.error}>{error}</p>}
       </form>
     </>
   );

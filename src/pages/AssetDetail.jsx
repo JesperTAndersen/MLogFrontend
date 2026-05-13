@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router";
 import { getAssetById, getLogsForAsset } from "../utils/apiReader";
 import LogCard from "../components/logsComponents/LogCard";
 import Select from "../components/shared/Select";
-import "./AssetDetail.css";
+import styles from "./AssetDetail.module.css";
 import { formatDateTime } from "../utils/formatDateTime";
 import { useAuth } from "../context/authContext";
 
@@ -29,6 +29,8 @@ function AssetDetail() {
   const [taskTypeFilter, setTaskTypeFilter] = useState(null);
 
   const { hasRole } = useAuth();
+
+  const canCreateLog = hasRole("TECHNICIAN") && asset?.active === true;
 
   const { id } = useParams();
 
@@ -65,64 +67,61 @@ function AssetDetail() {
   if (error) return <h1>{error}</h1>;
 
   return (
-    <div className="asset-detail-page">
-      <section className="asset-detail-summary">
-        <p className="asset-detail-name">{asset?.name}</p>
+    <div className={styles.page}>
+      <section className={styles.summary}>
+        <p className={styles.name}>{asset?.name}</p>
         {asset?.description ? (
-          <p className="asset-detail-description">{asset.description}</p>
+          <p className={styles.description}>{asset.description}</p>
         ) : null}
 
-        <div className="asset-detail-meta">
+        <div className={styles.meta}>
           {asset?.active === true ? (
-            <span className="asset-detail-status asset-detail-status--active">
+            <span className={`${styles.status} ${styles.statusActive}`}>
               Active
             </span>
           ) : asset?.active === false ? (
-            <span className="asset-detail-status asset-detail-status--inactive">
+            <span className={`${styles.status} ${styles.statusInactive}`}>
               Inactive
             </span>
           ) : null}
 
           {asset?.lastLogDate ? (
-            <span className="asset-detail-last-log">
+            <span className={styles.lastLog}>
               Last log: {formatDateTime(asset.lastLogDate)}
             </span>
           ) : null}
         </div>
-
-        {hasRole("TECHNICIAN") ? (
-          <div className="asset-detail-actions">
-            <Link to={`/assets/${id}/createlog`} className="asset-detail-create-log">
-              Create log
-            </Link>
-          </div>
-        ) : null}
       </section>
 
-      <section className="asset-detail-logs">
+      <section className={styles.logs}>
         <>
-          <div className="asset-detail-toolbar">
+          <div className={styles.toolbar}>
             <Select
-              labelClassName="asset-detail-filter"
               labelText="Status"
-              selectClassName="asset-detail-filter-select"
               value={statusFilter ?? ""}
               onChange={handleStatusChange}
               options={LOG_STATUS_FILTER_OPTIONS}
             />
 
             <Select
-              labelClassName="asset-detail-filter"
               labelText="Task type"
-              selectClassName="asset-detail-filter-select"
               value={taskTypeFilter ?? ""}
               onChange={handleTaskTypeChange}
               options={LOG_TASK_TYPE_FILTER_OPTIONS}
             />
+
+            {canCreateLog ? (
+              <Link
+                to={`/assets/${id}/createlog`}
+                className={`${styles.createLog} ${styles.createLogInline}`}
+              >
+                Create log
+              </Link>
+            ) : null}
           </div>
 
           {logs.length === 0 ? (
-            <p className="asset-detail-empty">
+            <p className={styles.empty}>
               {statusFilter || taskTypeFilter
                 ? "No logs match those filters."
                 : "No logs for this asset yet."}

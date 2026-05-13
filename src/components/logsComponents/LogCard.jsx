@@ -1,11 +1,6 @@
 import { useState } from "react";
-import "./LogCard.css";
+import styles from "./LogCard.module.css";
 import { formatDateTime } from "../../utils/formatDateTime";
-
-const STATUS_CLASS = {
-  DONE: "log-card-status--success",
-  FAILED: "log-card-status--error",
-};
 
 function toStatusLabel(status) {
   if (!status) return "";
@@ -16,7 +11,12 @@ function LogCard({ log }) {
   const [expanded, setExpanded] = useState(false);
 
   const statusLabel = toStatusLabel(log?.status);
-  const statusClass = STATUS_CLASS[log?.status] ?? "";
+  const statusClass =
+    log?.status === "DONE"
+      ? styles.statusSuccess
+      : log?.status === "FAILED"
+        ? styles.statusError
+        : "";
   const performedDateText = formatDateTime(log?.performedDate);
 
   const toggleExpanded = () => setExpanded((prev) => !prev);
@@ -24,17 +24,17 @@ function LogCard({ log }) {
   return (
     <button
       type="button"
-      className={expanded ? "log-card log-card--expanded" : "log-card"}
+      className={styles.card}
       onClick={toggleExpanded}
     >
-      <div className="log-card-top">
-        <p className="log-card-task" title={log?.taskType ?? ""}>
+      <div className={styles.top}>
+        <p className={styles.task} title={log?.taskType ?? ""}>
           {log?.taskType ?? "Log"}
         </p>
         {statusLabel ? (
           <span
             className={
-              statusClass ? `log-card-status ${statusClass}` : "log-card-status"
+              statusClass ? `${styles.status} ${statusClass}` : styles.status
             }
           >
             {statusLabel}
@@ -42,12 +42,12 @@ function LogCard({ log }) {
         ) : null}
       </div>
 
-      <div className="log-card-meta">
+      <div className={styles.meta}>
         {performedDateText ? (
-          <span className="log-card-date">{performedDateText}</span>
+          <span className={styles.date}>{performedDateText}</span>
         ) : null}
         {log?.performedByName ? (
-          <span className="log-card-user" title={log.performedByName}>
+          <span className={styles.user} title={log.performedByName}>
             {log.performedByName}
           </span>
         ) : null}
@@ -57,8 +57,8 @@ function LogCard({ log }) {
         <p
           className={
             expanded
-              ? "log-card-comment log-card-comment--full"
-              : "log-card-comment"
+              ? `${styles.comment} ${styles.commentFull}`
+              : styles.comment
           }
         >
           {log.comment}
@@ -66,39 +66,39 @@ function LogCard({ log }) {
       ) : null}
 
       {expanded ? (
-        <div className="log-card-details">
+        <div className={styles.details}>
           {log?.id != null ? (
-            <div className="log-card-detail-row">
-              <span className="log-card-detail-label">Log ID</span>
-              <span className="log-card-detail-value">{log.id}</span>
+            <div className={styles.detailRow}>
+              <span className={styles.detailLabel}>Log ID</span>
+              <span className={styles.detailValue}>{log.id}</span>
             </div>
           ) : null}
 
           {log?.taskType ? (
-            <div className="log-card-detail-row">
-              <span className="log-card-detail-label">Task</span>
-              <span className="log-card-detail-value">{log.taskType}</span>
+            <div className={styles.detailRow}>
+              <span className={styles.detailLabel}>Task</span>
+              <span className={styles.detailValue}>{log.taskType}</span>
             </div>
           ) : null}
 
           {statusLabel ? (
-            <div className="log-card-detail-row">
-              <span className="log-card-detail-label">Status</span>
-              <span className="log-card-detail-value">{statusLabel}</span>
+            <div className={styles.detailRow}>
+              <span className={styles.detailLabel}>Status</span>
+              <span className={styles.detailValue}>{statusLabel}</span>
             </div>
           ) : null}
 
           {performedDateText ? (
-            <div className="log-card-detail-row">
-              <span className="log-card-detail-label">Performed</span>
-              <span className="log-card-detail-value">{performedDateText}</span>
+            <div className={styles.detailRow}>
+              <span className={styles.detailLabel}>Performed</span>
+              <span className={styles.detailValue}>{performedDateText}</span>
             </div>
           ) : null}
 
           {log?.performedByName ? (
-            <div className="log-card-detail-row">
-              <span className="log-card-detail-label">By</span>
-              <span className="log-card-detail-value">
+            <div className={styles.detailRow}>
+              <span className={styles.detailLabel}>By</span>
+              <span className={styles.detailValue}>
                 {log.performedByName}
               </span>
             </div>

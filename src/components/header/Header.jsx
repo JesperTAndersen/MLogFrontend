@@ -3,6 +3,30 @@ import { useState } from "react";
 import DrawerMenu from "./DrawerMenu";
 import NavBar from "./NavBar";
 import { useAuth } from "../../context/authContext";
+import styles from "./Header.module.css";
+
+function getUserInitials(authReady, authUser) {
+  if (!authReady) return "…";
+  if (!authUser) return "G";
+
+  const first = String(authUser.firstName ?? "").trim();
+  const last = String(authUser.lastName ?? "").trim();
+
+  const firstInitial = first ? first[0].toUpperCase() : "";
+  const lastInitial = last ? last[0].toUpperCase() : "";
+
+  const initials = `${firstInitial}${lastInitial}`.trim();
+  return initials || "U";
+}
+
+function getUserLabel(authReady, authUser) {
+  if (!authReady) return "Loading user";
+  if (!authUser) return "Guest";
+  const first = String(authUser.firstName ?? "").trim();
+  const last = String(authUser.lastName ?? "").trim();
+  const fullName = `${first} ${last}`.trim();
+  return fullName || "User";
+}
 
 function getPageTitleFromPath(pathname) {
   if (pathname === "/assets") return "Assets";
@@ -20,7 +44,8 @@ function Header() {
   const { authUser, authReady } = useAuth();
   const { pathname } = useLocation();
 
-  const username = authReady ? (authUser ? authUser.firstName : "Guest") : "…";
+  const userInitials = getUserInitials(authReady, authUser);
+  const userLabel = getUserLabel(authReady, authUser);
 
   const closeMenu = () => setIsMenuOpen(false);
   const toggleMenu = () => setIsMenuOpen((prev) => !prev);
@@ -28,9 +53,16 @@ function Header() {
 
   return (
     <>
-      <NavBar username={username} onToggle={toggleMenu} pageTitle={pageTitle} />
-      <DrawerMenu isMenuOpen={isMenuOpen} onClose={closeMenu} />
-      <Outlet context={{}} />
+      <div className={styles.shell}>
+        <NavBar
+          userInitials={userInitials}
+          userLabel={userLabel}
+          onToggle={toggleMenu}
+          pageTitle={pageTitle}
+        />
+        <DrawerMenu isMenuOpen={isMenuOpen} onClose={closeMenu} />
+      </div>
+      <Outlet />
     </>
   );
 }

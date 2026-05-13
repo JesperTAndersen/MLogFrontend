@@ -5,18 +5,18 @@
   --color-accent: #9CA3AF;
 
   /* === Backgrounds === */
-  --color-background: #F3F4F6;   /* app background */
-  --color-surface: #FFFFFF;      /* cards, modals */
-  --color-surface-muted: #F9FAFB;
+  --color-background: #E2E8F0;   /* app background */
+  --color-surface: #F8FAFC;      /* cards, modals */
+  --color-surface-muted: #F1F5F9;
 
   /* === Text === */
-  --color-text: #111827;
-  --color-muted-text: #6B7280;
+  --color-text: #0F172A;
+  --color-muted-text: #475569;
   --color-inverse-text: #FFFFFF;
 
   /* === Borders === */
-  --color-border: #E5E7EB;
-  --color-border-strong: #D1D5DB;
+  --color-border: #CBD5E1;
+  --color-border-strong: #94A3B8;
 
   /* === Status (Semantic Colors) === */
   --color-success: #16A34A;
@@ -26,9 +26,9 @@
 
   /* === Status Backgrounds (for badges, alerts) === */
   --color-success-bg: #DCFCE7;
-  --color-warning-bg: #FEF3C7;
+  --color-warning-bg: #FFFBEB;
   --color-error-bg: #FEE2E2;
-  --color-info-bg: #DBEAFE;
+  --color-info-bg: #E0F2FE;
 
   /* === UI Structure === */
   --border-radius: 8px;

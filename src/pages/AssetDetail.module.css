@@ -1,0 +1,131 @@
+.page {
+  padding: 12px 0 6px;
+}
+
+.summary {
+  margin: 12px 16px;
+  padding: 14px 16px;
+
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.name {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+  color: var(--color-text);
+}
+
+.description {
+  margin: 8px 0 0;
+  font-size: 14px;
+  line-height: 1.35;
+  color: var(--color-muted-text);
+}
+
+.meta {
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  border: 1px solid var(--color-border);
+  white-space: nowrap;
+}
+
+.statusActive {
+  color: var(--color-success);
+  background: var(--color-success-bg);
+  border-color: color-mix(in srgb, var(--color-success) 30%, var(--color-border));
+}
+
+.statusInactive {
+  color: var(--color-warning);
+  background: var(--color-warning-bg);
+  border-color: color-mix(in srgb, var(--color-warning) 30%, var(--color-border));
+}
+
+.lastLog {
+  font-size: 12px;
+  letter-spacing: 0.2px;
+  color: var(--color-muted-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.actions {
+  margin-top: 12px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.createLog {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  padding: 0 14px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  text-decoration: none;
+  color: var(--color-inverse-text);
+  background: var(--color-primary);
+  border: 1px solid
+    color-mix(in srgb, var(--color-primary) 70%, var(--color-border));
+}
+
+.createLog:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px
+    color-mix(in srgb, var(--color-primary-light) 25%, transparent);
+}
+
+.logs {
+  padding: 2px 0 12px;
+}
+
+.toolbar {
+  margin: 10px 16px 4px;
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 12px;
+}
+
+.createLogInline {
+  justify-self: end;
+  align-self: end;
+}
+
+@media (max-width: 360px) {
+  .toolbar {
+    grid-template-columns: 1fr;
+  }
+
+  .createLogInline {
+    width: 100%;
+    justify-self: stretch;
+  }
+}
+
+.empty {
+  margin: 12px 16px;
+  font-size: 14px;
+  color: var(--color-muted-text);
+}

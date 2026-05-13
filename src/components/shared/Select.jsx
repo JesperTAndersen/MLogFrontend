@@ -1,20 +1,16 @@
-function Select({
-  labelClassName,
-  labelText,
-  selectClassName,
-  value,
-  onChange,
-  options,
-}) {
+import formStyles from "../../styles/forms.module.css";
+
+function Select({ labelText, value, onChange, options, required }) {
   return (
     <>
-      <label className={labelClassName}>
+      <label className={formStyles.label}>
         {labelText}
         <select
-          className={selectClassName}
-          value={value ?? "null"}
+          className={formStyles.control}
+          value={value ?? ""}
           name="choice"
           onChange={onChange}
+          required={required}
         >
           {options.map((option) => (
             <option key={option.value} value={option.value}>

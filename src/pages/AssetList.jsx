@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import AssetCard from "../components/assets/AssetCard";
 import Select from "../components/shared/Select";
 import { getAssets } from "../utils/apiReader";
-import "./AssetList.css";
+import styles from "./AssetList.module.css";
 
 const ASSET_STATUS_FILTER_OPTIONS = [
   { value: "null", label: "All" },
@@ -41,11 +41,9 @@ function AssetList() {
 
   return (
     <>
-      <div className="asset-list-toolbar">
+      <div className={styles.toolbar}>
         <Select
-          labelClassName="asset-list-filter"
           labelText="Filter by status"
-          selectClassName="asset-list-filter-select"
           value={activeFilter ?? "null"}
           onChange={statusFilter}
           options={ASSET_STATUS_FILTER_OPTIONS}

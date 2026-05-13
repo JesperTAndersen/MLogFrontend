@@ -1,12 +1,12 @@
 import LoginForm from "../components/auth/LoginForm";
-import "./Login.css";
+import styles from "./Login.module.css";
 
 function Login() {
   return (
-    <div className="login-page">
-      <div className="login-brand">
-        <h1 className="login-brand-title">Rapid Maintenance</h1>
-        <p className="login-brand-subtitle">Maintenance Log</p>
+    <div className={styles.page}>
+      <div className={styles.brand}>
+        <h1 className={styles.brandTitle}>Rapid Maintenance</h1>
+        <p className={styles.brandSubtitle}>Maintenance Log</p>
       </div>
       <LoginForm />
     </div>

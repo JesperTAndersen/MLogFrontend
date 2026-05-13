@@ -4,6 +4,8 @@ import { createLog } from "../../utils/apiReader";
 import { normalizeDate } from "../../utils/formatDateTime";
 import Button from "../shared/Button";
 import Select from "../shared/Select";
+import formStyles from "../../styles/forms.module.css";
+import styles from "./CreateLog.module.css";
 
 const STATUS_OPTIONS = [
   { value: "", label: "Select status" },
@@ -49,7 +51,7 @@ function CreateLog() {
     if (!performedDate) return setError("Performed date is required.");
     if (!status) return setError("Status is required.");
     if (!taskType) return setError("Task type is required.");
-    if (!comment) return  setError("Comment is required");
+    if (!comment) return setError("Comment is required.");
 
     const performed = new Date(performedDate);
     if (Number.isNaN(performed.getTime())) {
@@ -78,8 +80,8 @@ function CreateLog() {
   }
 
   return (
-    <form onSubmit={submitLog}>
-      <label className="label">
+    <form onSubmit={submitLog} className={styles.form}>
+      <label className={formStyles.label}>
         Performed date
         <input
           type="datetime-local"
@@ -87,43 +89,42 @@ function CreateLog() {
           onChange={(e) => setPerformedDate(e.target.value)}
           max={toDateTimeLocalMaxValue()}
           required
+          className={formStyles.control}
         />
       </label>
 
       <Select
-        labelClassName="label"
         labelText="Status"
-        selectClassName="input"
         value={status}
         onChange={(e) => setStatus(e.target.value)}
         options={STATUS_OPTIONS}
+        required
       />
 
       <Select
-        labelClassName="label"
         labelText="Task type"
-        selectClassName="input"
         value={taskType}
         onChange={(e) => setTaskType(e.target.value)}
         options={TASK_TYPE_OPTIONS}
+        required
       />
 
-      <label className="label">
+      <label className={formStyles.label}>
         Comment
         <textarea
           value={comment}
           onChange={(e) => setComment(e.target.value)}
           placeholder="Routine check"
           rows={4}
+          className={`${formStyles.control} ${formStyles.textarea}`}
         />
       </label>
 
-      {error ? <p>{error}</p> : null}
+      {error ? (
+        <p className={`${formStyles.message} ${formStyles.error}`}>{error}</p>
+      ) : null}
 
-      <Button
-        className="button"
-        buttonText={submitting ? "Creating…" : "Create log"}
-      />
+      <Button buttonText={submitting ? "Creating…" : "Create log"} />
     </form>
   );
 }

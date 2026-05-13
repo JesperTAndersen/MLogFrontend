@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router";
-import "./AssetCard.css";
+import styles from "./AssetCard.module.css";
 import { formatDateTime } from "../../utils/formatDateTime";
 
 function AssetCard({ asset }) {
@@ -8,23 +8,23 @@ function AssetCard({ asset }) {
   return (
     <>
       <section
-        className="asset-card"
+        className={styles.card}
         onClick={() => navigate(`/assets/${asset.id}/logs`)}
       >
-        <p className="asset-card-name">{asset.name}</p>
-        <p className="asset-card-description">{asset.description}</p>
-        <p className="asset-card-status-line">
+        <p className={styles.name}>{asset.name}</p>
+        <p className={styles.description}>{asset.description}</p>
+        <p className={styles.statusLine}>
           {asset.active ? (
-            <span className="asset-card-status asset-card-status--active">
+            <span className={`${styles.status} ${styles.statusActive}`}>
               Active
             </span>
           ) : (
-            <span className="asset-card-status asset-card-status--inactive">
+            <span className={`${styles.status} ${styles.statusInactive}`}>
               Inactive
             </span>
           )}
         </p>
-        <p className="asset-card-date">{formatDateTime(asset.lastLogDate)}</p>
+        <p className={styles.date}>{formatDateTime(asset.lastLogDate)}</p>
       </section>
     </>
   );

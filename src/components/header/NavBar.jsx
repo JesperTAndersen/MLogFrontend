@@ -1,18 +1,24 @@
-import "./NavBar.css";
+import styles from "./NavBar.module.css";
 
-function NavBar({ username, onToggle, pageTitle }) {
+function NavBar({ userInitials, userLabel, onToggle, pageTitle }) {
   return (
-    <section className="nav-bar">
-      <span className="nav-bar-toggle" onClick={onToggle}>
+    <section className={styles.bar}>
+      <span className={styles.toggle} onClick={onToggle}>
         ☰
       </span>
-      <div className="nav-bar-title">
-        <span className="nav-bar-brand">Rapid Maintenance</span>
+      <div className={styles.title}>
+        <span className={styles.brand}>Rapid Maintenance</span>
         {pageTitle ? (
-          <span className="nav-bar-page-title">{pageTitle}</span>
+          <span className={styles.pageTitle}>{pageTitle}</span>
         ) : null}
       </div>
-      <span className="nav-bar-user">{username}</span>
+      <span
+        className={styles.userAvatar}
+        aria-label={userLabel}
+        title={userLabel}
+      >
+        {userInitials}
+      </span>
     </section>
   );
 }

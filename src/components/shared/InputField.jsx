@@ -1,10 +1,10 @@
-import "./InputField.css";
+import formStyles from "../../styles/forms.module.css";
 
 function InputField({ label, type, value, onChange, placeholder, required }) {
   return (
     <>
       {label ? (
-        <label className="label">
+        <label className={formStyles.label}>
           {label}
           <input
             type={type}
@@ -12,6 +12,7 @@ function InputField({ label, type, value, onChange, placeholder, required }) {
             onChange={(e) => onChange(e.target.value)}
             placeholder={placeholder}
             required={required}
+            className={formStyles.control}
           ></input>
         </label>
       ) : (
@@ -21,6 +22,7 @@ function InputField({ label, type, value, onChange, placeholder, required }) {
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
           required={required}
+          className={formStyles.control}
         ></input>
       )}
     </>

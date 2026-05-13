@@ -1,26 +1,20 @@
-.login-page {
+.page {
   width: min(348px, 100%);
   margin: auto;
   padding: 44px 22px;
   box-sizing: border-box;
 }
 
-.login-brand {
+.brand {
   text-align: center;
   margin-bottom: 44px;
 }
 
-.login-brand-title {
+.brandTitle {
   margin: 0;
 }
 
-.login-brand-subtitle {
+.brandSubtitle {
   margin: 8px 0 0;
   color: var(--color-muted-text);
-}
-
-@media (max-width: 420px) {
-  .login-inner {
-    padding: 36px 18px 22px;
-  }
 }

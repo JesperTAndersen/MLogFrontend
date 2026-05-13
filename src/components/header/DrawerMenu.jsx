@@ -1,5 +1,5 @@
 import { NavLink } from "react-router";
-import "./DrawerMenu.css";
+import styles from "./DrawerMenu.module.css";
 import { useAuth } from "../../context/authContext";
 
 function DrawerMenu({ isMenuOpen, onClose }) {
@@ -13,7 +13,7 @@ function DrawerMenu({ isMenuOpen, onClose }) {
   return (
     <>
       {isMenuOpen && (
-        <nav className="drawer-menu">
+        <nav className={styles.menu}>
           <NavLink to="/assets" onClick={onClose}>
             Assets
           </NavLink>

@@ -1,4 +1,4 @@
-.log-card {
+.card {
   appearance: none;
   -webkit-appearance: none;
   font: inherit;
@@ -23,32 +23,32 @@
   transition: transform 120ms ease, border-color 120ms ease, box-shadow 120ms ease;
 }
 
-.log-card:hover {
+.card:hover {
   border-color: color-mix(in srgb, var(--color-primary-light) 30%, var(--color-border));
   box-shadow: var(--shadow-md);
   transform: translateY(-1px);
 }
 
-.log-card:active {
+.card:active {
   transform: translateY(0px);
   box-shadow: var(--shadow-sm);
 }
 
-.log-card:focus-visible {
+.card:focus-visible {
   outline: none;
   box-shadow: 0 0 0 3px
       color-mix(in srgb, var(--color-primary-light) 25%, transparent),
     var(--shadow-sm);
 }
 
-.log-card-top {
+.top {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 10px;
 }
 
-.log-card-task {
+.task {
   margin: 0;
   font-size: 14px;
   font-weight: 750;
@@ -60,7 +60,7 @@
   text-overflow: ellipsis;
 }
 
-.log-card-status {
+.status {
   display: inline-flex;
   align-items: center;
   padding: 4px 10px;
@@ -74,39 +74,27 @@
   white-space: nowrap;
 }
 
-.log-card-status--success {
+.statusSuccess {
   color: var(--color-success);
   background: var(--color-success-bg);
   border-color: color-mix(in srgb, var(--color-success) 30%, var(--color-border));
 }
 
-.log-card-status--warning {
-  color: var(--color-warning);
-  background: var(--color-warning-bg);
-  border-color: color-mix(in srgb, var(--color-warning) 30%, var(--color-border));
-}
-
-.log-card-status--info {
-  color: var(--color-info);
-  background: var(--color-info-bg);
-  border-color: color-mix(in srgb, var(--color-info) 30%, var(--color-border));
-}
-
-.log-card-status--error {
+.statusError {
   color: var(--color-error);
   background: var(--color-error-bg);
   border-color: color-mix(in srgb, var(--color-error) 30%, var(--color-border));
 }
 
-.log-card-meta {
+.meta {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
   gap: 10px;
 }
 
-.log-card-date,
-.log-card-user {
+.date,
+.user {
   font-size: 12px;
   letter-spacing: 0.2px;
   color: var(--color-muted-text);
@@ -117,7 +105,7 @@
   text-overflow: ellipsis;
 }
 
-.log-card-comment {
+.comment {
   margin: 0;
   font-size: 13px;
   line-height: 1.35;
@@ -129,7 +117,7 @@
   overflow: hidden;
 }
 
-.log-card-comment--full {
+.commentFull {
   display: block;
   -webkit-line-clamp: initial;
   -webkit-box-orient: initial;
@@ -137,7 +125,7 @@
   white-space: pre-wrap;
 }
 
-.log-card-details {
+.details {
   margin-top: 4px;
   padding-top: 10px;
   border-top: 1px solid var(--color-border);
@@ -146,21 +134,21 @@
   gap: 8px;
 }
 
-.log-card-detail-row {
+.detailRow {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
   gap: 12px;
 }
 
-.log-card-detail-label {
+.detailLabel {
   font-size: 12px;
   font-weight: 650;
   letter-spacing: 0.2px;
   color: var(--color-muted-text);
 }
 
-.log-card-detail-value {
+.detailValue {
   font-size: 12px;
   letter-spacing: 0.2px;
   color: var(--color-text);
@@ -172,7 +160,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .log-card {
+  .card {
     transition: none;
   }
 }
