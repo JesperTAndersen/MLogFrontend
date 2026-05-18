@@ -18,11 +18,17 @@ function App() {
             <Route path="/">
               <Route index element={<Navigate to="login" replace />} />
               <Route path="login" element={<Login />} />
+
+              {/* AUTHENTICATED+ */}
               <Route element={<ProtectedRoute />}>
                 <Route element={<Header />}>
                   <Route path="assets" element={<AssetList />} />
-                  <Route path="employees" element={<EmployeeList />} />
                   <Route path="assets/:id/logs" element={<AssetDetail />} />
+                  <Route path="employees" element={<EmployeeList />} />
+                  <Route path="employees/:id" element={<UserProfile />} />
+                  <Route path="users/me" element={<UserProfile />} />
+
+                  {/* TECHNICIAN+ */}
                   <Route
                     element={<ProtectedRoute requiredRole={"TECHNICIAN"} />}
                   >
@@ -31,7 +37,11 @@ function App() {
                       element={<CreateLog />}
                     />
                   </Route>
-                  <Route path="users/me" element={<UserProfile />} />
+
+                  {/* MANAGER+ */}
+                  <Route
+                    element={<ProtectedRoute requiredRole="MANAGER" />}
+                  ></Route>
                 </Route>
               </Route>
             </Route>

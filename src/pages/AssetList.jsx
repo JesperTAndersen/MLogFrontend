@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import AssetCard from "../components/assets/AssetCard";
 import Select from "../components/shared/Select";
-import { getAssets } from "../utils/apiReader";
+import { getAssets } from "../utils/assetApi";
 import styles from "./AssetList.module.css";
 
 const ASSET_STATUS_FILTER_OPTIONS = [

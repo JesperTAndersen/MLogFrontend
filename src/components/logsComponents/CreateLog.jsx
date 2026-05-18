@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router";
-import { createLog } from "../../utils/apiReader";
+import { createLog } from "../../utils/logApi";
 import { normalizeDate } from "../../utils/formatDateTime";
 import Button from "../shared/Button";
 import Select from "../shared/Select";

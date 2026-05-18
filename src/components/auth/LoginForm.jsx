@@ -3,7 +3,7 @@ import InputField from "../shared/InputField";
 import { useState } from "react";
 import styles from "./LoginForm.module.css";
 import { useNavigate } from "react-router";
-import { loginAPI } from "../../utils/apiReader";
+import { loginAPI } from "../../utils/apiClient";
 import { useAuth } from "../../context/authContext";
 
 function LoginForm() {

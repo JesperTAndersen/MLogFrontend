@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
-import { getAssetById, getLogsForAsset } from "../utils/apiReader";
+import { getAssetById } from "../utils/assetApi";
+import { getLogsForAsset } from "../utils/logApi";
 import LogCard from "../components/logsComponents/LogCard";
 import Select from "../components/shared/Select";
 import styles from "./AssetDetail.module.css";
