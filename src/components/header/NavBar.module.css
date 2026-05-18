@@ -80,4 +80,5 @@
   border: 1px solid
     color-mix(in srgb, var(--color-primary) 70%, var(--color-border));
   user-select: none;
+  text-decoration: none;
 }

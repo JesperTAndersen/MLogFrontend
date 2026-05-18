@@ -26,7 +26,7 @@ function App() {
                   <Route path="assets/:id/logs" element={<AssetDetail />} />
                   <Route path="employees" element={<EmployeeList />} />
                   <Route path="employees/:id" element={<UserProfile />} />
-                  <Route path="users/me" element={<UserProfile />} />
+                  <Route path="employees/me" element={<UserProfile />} />
 
                   {/* TECHNICIAN+ */}
                   <Route

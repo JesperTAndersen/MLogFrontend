@@ -71,5 +71,6 @@ export async function apiRequest(url, { method = "GET", body } = {}) {
     );
   }
 
+  if (response.status === 204) return null;
   return response.json();
 }

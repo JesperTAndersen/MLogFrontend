@@ -17,7 +17,7 @@ function DrawerMenu({ isMenuOpen, onClose }) {
           <NavLink to="/assets" onClick={onClose}>
             Assets
           </NavLink>
-          <NavLink to="/users/me" onClick={onClose}>
+          <NavLink to="/employees/me" onClick={onClose}>
             Your Profile
           </NavLink>
           <NavLink to="/employees" onClick={onClose}>

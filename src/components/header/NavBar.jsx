@@ -1,4 +1,5 @@
 import styles from "./NavBar.module.css";
+import { Link } from "react-router";
 
 function NavBar({ userInitials, userLabel, onToggle, pageTitle }) {
   return (
@@ -12,13 +13,14 @@ function NavBar({ userInitials, userLabel, onToggle, pageTitle }) {
           <span className={styles.pageTitle}>{pageTitle}</span>
         ) : null}
       </div>
-      <span
+      <Link
+        to="/employees/me"
         className={styles.userAvatar}
         aria-label={userLabel}
         title={userLabel}
       >
         {userInitials}
-      </span>
+      </Link>
     </section>
   );
 }

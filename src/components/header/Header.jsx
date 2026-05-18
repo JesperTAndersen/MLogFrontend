@@ -28,10 +28,11 @@ function getUserLabel(authReady, authUser) {
   return fullName || "User";
 }
 
-function getPageTitleFromPath(pathname) {
+function getPageTitleFromPath(pathname, authUser) {
   if (pathname === "/assets") return "Assets";
   if (pathname === "/employees") return "Employees";
-  if (pathname === "/users/me") return "Profile";
+  if (pathname === "/employees/me") return "Profile";
+  if (authUser?.id && pathname === `/employees/${authUser.id}`) return "Profile";
   if (pathname.startsWith("/assets/") && pathname.endsWith("/logs")) {
     return "Asset Logs";
   }
@@ -49,7 +50,7 @@ function Header() {
 
   const closeMenu = () => setIsMenuOpen(false);
   const toggleMenu = () => setIsMenuOpen((prev) => !prev);
-  const pageTitle = getPageTitleFromPath(pathname);
+  const pageTitle = getPageTitleFromPath(pathname, authUser);
 
   return (
     <>
