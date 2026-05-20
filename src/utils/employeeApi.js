@@ -12,8 +12,9 @@ export function getEmployeeById(id) {
   return apiRequest(`/employees/${id}`);
 }
 
-export function getEmployees() {
-  return apiRequest("/employees");
+export function getEmployees(active = null) {
+  const url = active !==null ? `/employees?active=${active}` : "/employees";
+  return apiRequest(url);
 }
 
 export function changeEmployeePassword(id, oldPassword, newPassword) {

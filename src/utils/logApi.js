@@ -20,3 +20,8 @@ export function createLog(assetId, logBody) {
     body: logBody,
   });
 }
+
+export function getLogsForEmployee(employeeId) {
+  const url = `/logs/employee/${employeeId}`;
+  return apiRequest(url);
+}

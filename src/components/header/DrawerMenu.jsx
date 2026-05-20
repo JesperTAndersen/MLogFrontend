@@ -3,7 +3,9 @@ import styles from "./DrawerMenu.module.css";
 import { useAuth } from "../../context/authContext";
 
 function DrawerMenu({ isMenuOpen, onClose }) {
-  const { logout } = useAuth();
+  const { logout, hasRole } = useAuth();
+
+  const canViewManagerRoutes = hasRole?.("MANAGER") === true;
 
   function exitApp() {
     logout();
@@ -20,17 +22,23 @@ function DrawerMenu({ isMenuOpen, onClose }) {
           <NavLink to="/employees/me" onClick={onClose}>
             Your Profile
           </NavLink>
-          <NavLink to="/employees" onClick={onClose}>
-            User List
+          <NavLink to="/employees" end onClick={onClose}>
+            Employee List
           </NavLink>
-          <NavLink to="/assets" onClick={onClose}>
-            Manage Assets(PLACEHOLDER)
-          </NavLink>
-          <NavLink to="/assets" onClick={onClose}>
-            Manager Users(PLACEHOLDER)
-          </NavLink>
+
+          {canViewManagerRoutes ? (
+            <>
+              <NavLink to="/assets" onClick={onClose}>
+                Manage Assets(PLACEHOLDER)
+              </NavLink>
+              <NavLink to="/assets" onClick={onClose}>
+                Manager Users(PLACEHOLDER)
+              </NavLink>
+            </>
+          ) : null}
+
           <NavLink to="/login" onClick={exitApp}>
-            logout
+            Logout
           </NavLink>
         </nav>
       )}

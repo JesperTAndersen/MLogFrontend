@@ -105,7 +105,7 @@ function UserProfile() {
                 aria-label={isEditing ? "Cancel editing" : "Edit user"}
                 title={isEditing ? "Cancel" : "Edit"}
               >
-                ⚙
+                Edit
               </button>
             ) : null}
           </div>

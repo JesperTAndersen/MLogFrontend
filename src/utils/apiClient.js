@@ -2,6 +2,10 @@ const AUTH_URL = "http://localhost:7070/api/v1/auth";
 const BASE_URL = "http://localhost:7070/api/v1";
 const TOKEN_KEY = "jwt";
 
+function isFetchNetworkError(err) {
+  return err instanceof TypeError; //what browser return for fetch/cors errors
+}
+
 function setToken(jwt) {
   localStorage.setItem(TOKEN_KEY, jwt);
 }
@@ -15,11 +19,21 @@ export function removeToken() {
 }
 
 export async function loginAPI(credentials) {
-  const response = await fetch(`${AUTH_URL}/login`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(credentials),
-  });
+  let response;
+  try {
+    response = await fetch(`${AUTH_URL}/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(credentials),
+    });
+  } catch (err) {
+    if (isFetchNetworkError(err)) {
+      throw new Error("Unable to reach server. Please contact support.", {
+        cause: err,
+      });
+    }
+    throw err;
+  }
 
   if (!response.ok) {
     if (response.status === 401) throw new Error("Invalid email or password");
@@ -58,11 +72,22 @@ export async function apiRequest(url, { method = "GET", body } = {}) {
     ? url
     : `${BASE_URL}${url.startsWith("/") ? "" : "/"}${url}`;
 
-  const response = await fetch(finalUrl, {
-    method,
-    headers,
-    body: requestBody,
-  });
+  let response;
+  try {
+    response = await fetch(finalUrl, {
+      method,
+      headers,
+      body: requestBody,
+    });
+  } catch (err) {
+    if (isFetchNetworkError(err)) {
+      throw new Error(
+        `Unable to reach the server (${method} ${finalUrl}). Please try again later.`,
+        { cause: err },
+      );
+    }
+    throw err;
+  }
 
   if (!response.ok) {
     const errorText = await response.text().catch(() => "");
