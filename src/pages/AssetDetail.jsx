@@ -128,7 +128,9 @@ function AssetDetail() {
                 : "No logs for this asset yet."}
             </p>
           ) : (
-            logs.map((log) => <LogCard key={log.id} log={log} />)
+            logs.map((log) => (
+              <LogCard key={log.id} log={log} showAssetName={false} />
+            ))
           )}
         </>
       </section>

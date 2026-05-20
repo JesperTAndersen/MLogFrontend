@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router";
 import styles from "./LogCard.module.css";
 import { formatDateTime } from "../../utils/formatDateTime";
 
@@ -7,7 +8,7 @@ function toStatusLabel(status) {
   return String(status).replaceAll("_", " ");
 }
 
-function LogCard({ log }) {
+function LogCard({ log, showAssetName = false }) {
   const [expanded, setExpanded] = useState(false);
 
   const statusLabel = toStatusLabel(log?.status);
@@ -18,14 +19,26 @@ function LogCard({ log }) {
         ? styles.statusError
         : "";
   const performedDateText = formatDateTime(log?.performedDate);
+  const assetId = log?.assetId ?? null;
+  const assetName = log?.assetName ?? null;
+  const performedByName = log?.performedByName;
+  const performedById =
+    log?.performedByUserId ?? log?.performedByEmployeeId ?? null;
 
   const toggleExpanded = () => setExpanded((prev) => !prev);
 
   return (
-    <button
-      type="button"
+    <div
       className={styles.card}
       onClick={toggleExpanded}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          toggleExpanded();
+        }
+      }}
+      role="button"
+      tabIndex={0}
     >
       <div className={styles.top}>
         <p className={styles.task} title={log?.taskType ?? ""}>
@@ -46,9 +59,10 @@ function LogCard({ log }) {
         {performedDateText ? (
           <span className={styles.date}>{performedDateText}</span>
         ) : null}
-        {log?.performedByName ? (
-          <span className={styles.user} title={log.performedByName}>
-            {log.performedByName}
+
+        {showAssetName && assetName ? (
+          <span className={styles.asset} title={assetName}>
+            {assetName}
           </span>
         ) : null}
       </div>
@@ -74,38 +88,43 @@ function LogCard({ log }) {
             </div>
           ) : null}
 
-          {log?.taskType ? (
+          {assetId != null ? (
             <div className={styles.detailRow}>
-              <span className={styles.detailLabel}>Task</span>
-              <span className={styles.detailValue}>{log.taskType}</span>
+              <span className={styles.detailLabel}>Asset</span>
+              <Link
+                to={`/assets/${assetId}/logs`}
+                className={styles.assetLink}
+                onClick={(e) => e.stopPropagation()}
+                onKeyDown={(e) => e.stopPropagation()}
+              >
+                {assetName}
+              </Link>
             </div>
           ) : null}
 
-          {statusLabel ? (
-            <div className={styles.detailRow}>
-              <span className={styles.detailLabel}>Status</span>
-              <span className={styles.detailValue}>{statusLabel}</span>
-            </div>
-          ) : null}
-
-          {performedDateText ? (
-            <div className={styles.detailRow}>
-              <span className={styles.detailLabel}>Performed</span>
-              <span className={styles.detailValue}>{performedDateText}</span>
-            </div>
-          ) : null}
-
-          {log?.performedByName ? (
+          {performedByName ? (
             <div className={styles.detailRow}>
               <span className={styles.detailLabel}>By</span>
-              <span className={styles.detailValue}>
-                {log.performedByName}
-              </span>
+              {performedById != null ? (
+                <Link
+                  to={`/employees/${performedById}`}
+                  className={styles.assetLink}
+                  onClick={(e) => e.stopPropagation()}
+                  onKeyDown={(e) => e.stopPropagation()}
+                  title={performedByName}
+                >
+                  {performedByName}
+                </Link>
+              ) : (
+                <span className={styles.detailValue} title={performedByName}>
+                  {performedByName}
+                </span>
+              )}
             </div>
           ) : null}
         </div>
       ) : null}
-    </button>
+    </div>
   );
 }
 

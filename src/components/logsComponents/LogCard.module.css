@@ -94,7 +94,8 @@
 }
 
 .date,
-.user {
+.user,
+.asset {
   font-size: 12px;
   letter-spacing: 0.2px;
   color: var(--color-muted-text);
@@ -103,6 +104,22 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.assetLink {
+  font-size: 12px;
+  letter-spacing: 0.2px;
+  color: var(--color-primary);
+  text-decoration: underline;
+  text-align: right;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.assetLink:hover {
+  text-decoration: none;
 }
 
 .comment {
