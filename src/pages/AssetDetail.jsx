@@ -7,6 +7,7 @@ import Select from "../components/shared/Select";
 import styles from "./AssetDetail.module.css";
 import { formatDateTime } from "../utils/formatDateTime";
 import { useAuth } from "../context/authContext";
+import AssetAdminActions from "../components/assets/AssetAdminActions";
 
 const LOG_STATUS_FILTER_OPTIONS = [
   { value: "", label: "All" },
@@ -32,6 +33,7 @@ function AssetDetail() {
   const { hasRole } = useAuth();
 
   const canCreateLog = hasRole("TECHNICIAN") && asset?.active === true;
+  const isAdmin = hasRole("ADMIN");
 
   const { id } = useParams();
 
@@ -94,6 +96,14 @@ function AssetDetail() {
         </div>
       </section>
 
+      <AssetAdminActions
+        key={asset?.id ?? id}
+        asset={asset}
+        isVisible={isAdmin}
+        onAssetUpdated={setAsset}
+      />
+      
+     
       <section className={styles.logs}>
         <>
           <div className={styles.toolbar}>

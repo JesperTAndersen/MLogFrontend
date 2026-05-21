@@ -31,14 +31,6 @@ function LogCard({ log, showAssetName = false }) {
     <div
       className={styles.card}
       onClick={toggleExpanded}
-      onKeyDown={(e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          toggleExpanded();
-        }
-      }}
-      role="button"
-      tabIndex={0}
     >
       <div className={styles.top}>
         <p className={styles.task} title={log?.taskType ?? ""}>
