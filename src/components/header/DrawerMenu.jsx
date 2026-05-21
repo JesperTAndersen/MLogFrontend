@@ -28,11 +28,11 @@ function DrawerMenu({ isMenuOpen, onClose }) {
 
           {canViewManagerRoutes ? (
             <>
-              <NavLink to="/assets" onClick={onClose}>
-                Manage Assets(PLACEHOLDER)
+              <NavLink to="/assets/create" onClick={onClose}>
+                Create Asset
               </NavLink>
               <NavLink to="/assets" onClick={onClose}>
-                Manager Users(PLACEHOLDER)
+                Create User(PLACEHOLDER)
               </NavLink>
             </>
           ) : null}

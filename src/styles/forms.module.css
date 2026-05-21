@@ -36,6 +36,8 @@
   height: auto;
   min-height: 96px;
   resize: vertical;
+  resize: none;
+  font-family: system-ui, -apple-system, sans-serif;
 }
 
 .message {

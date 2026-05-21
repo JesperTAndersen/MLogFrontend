@@ -71,7 +71,7 @@ function AssetDetail() {
 
   return (
     <div className={styles.page}>
-      <section className={styles.summary}>
+      <section className={styles.summary} >
         <p className={styles.name}>{asset?.name}</p>
         {asset?.description ? (
           <p className={styles.description}>{asset.description}</p>

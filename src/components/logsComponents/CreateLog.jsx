@@ -115,7 +115,7 @@ function CreateLog() {
           value={comment}
           onChange={(e) => setComment(e.target.value)}
           placeholder="Routine check"
-          rows={4}
+          rows={6}
           className={`${formStyles.control} ${formStyles.textarea}`}
         />
       </label>

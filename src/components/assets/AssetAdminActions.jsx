@@ -57,7 +57,7 @@ function AssetAdminActions({ asset, isVisible, onAssetUpdated }) {
 
       {confirming ? (
         <>
-          <p className={formStyles.message}>Are you sure?</p>
+          <p className={formStyles.message, "center-text"}>Are you sure?</p>
           <Button
             handler={toggleActiveStatus}
             buttonText={
