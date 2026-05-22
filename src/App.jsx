@@ -11,6 +11,7 @@ import ProtectedRoute from "./components/shared/ProtectedRoute";
 import CreateLog from "./components/logsComponents/CreateLog";
 import CreateAsset from "./pages/CreateAsset";
 import CreateEmployee from "./pages/CreateEmployee";
+import LogSearch from "./pages/LogSearch";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
                   <Route path="employees" element={<EmployeeList />} />
                   <Route path="employees/:id" element={<UserProfile />} />
                   <Route path="employees/me" element={<UserProfile />} />
+                  <Route path="logs" element={<LogSearch />} />
 
                   {/* TECHNICIAN+ */}
                   <Route

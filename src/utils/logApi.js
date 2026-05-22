@@ -25,3 +25,11 @@ export function getLogsForEmployee(employeeId) {
   const url = `/logs/employee/${employeeId}`;
   return apiRequest(url);
 }
+
+export function getLogById(logId) {
+  if (logId === undefined || logId === null || logId === "") {
+    throw new Error("getLogById(logId) requires a logId");
+  }
+
+  return apiRequest(`/logs/${logId}`);
+}

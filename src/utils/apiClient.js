@@ -101,7 +101,7 @@ export async function apiRequest(url, { method = "GET", body } = {}) {
 
   if (!token) {
     redirectToLoginWithSessionExpiredMessage();
-    await new Promise(() => {});
+    await new Promise(() => {}); // hang forever, redirect will happen
   }
   headers.Authorization = `Bearer ${token}`;
 
@@ -136,7 +136,6 @@ export async function apiRequest(url, { method = "GET", body } = {}) {
     if (response.status === 401) {
       redirectToLoginWithSessionExpiredMessage();
       await new Promise(() => {}); // hang forever, redirect will happen
-      throw new Error(SESSION_EXPIRED_MESSAGE);
     }
 
     if (response.status === 403)
