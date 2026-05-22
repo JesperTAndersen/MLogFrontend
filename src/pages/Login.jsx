@@ -30,11 +30,12 @@ function Login() {
         <p className={styles.brandSubtitle}>Maintenance Log</p>
       </div>
 
-      {flashMessage ? (
-        <p className={`${formStyles.message} ${formStyles.error}`}>{flashMessage}</p>
-      ) : null}
-
       <LoginForm />
+      {flashMessage ? (
+        <p className={`${formStyles.message} ${formStyles.error}`}>
+          {flashMessage}
+        </p>
+      ) : null}
     </div>
   );
 }

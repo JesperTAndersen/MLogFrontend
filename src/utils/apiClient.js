@@ -100,7 +100,8 @@ export async function apiRequest(url, { method = "GET", body } = {}) {
   const token = readToken();
 
   if (!token) {
-    throw new Error("No JWT token available. Login first or provide a token.");
+    redirectToLoginWithSessionExpiredMessage();
+    await new Promise(() => {});
   }
   headers.Authorization = `Bearer ${token}`;
 
@@ -134,6 +135,7 @@ export async function apiRequest(url, { method = "GET", body } = {}) {
   if (!response.ok) {
     if (response.status === 401) {
       redirectToLoginWithSessionExpiredMessage();
+      await new Promise(() => {}); // hang forever, redirect will happen
       throw new Error(SESSION_EXPIRED_MESSAGE);
     }
 
