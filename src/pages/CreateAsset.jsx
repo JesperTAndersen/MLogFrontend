@@ -3,6 +3,7 @@ import { useNavigate } from "react-router";
 import Button from "../components/shared/Button";
 import InputField from "../components/shared/InputField";
 import Select from "../components/shared/Select";
+import TextAreaField from "../components/shared/TextAreaField";
 import formStyles from "../styles/forms.module.css";
 import styles from "./CreateAsset.module.css";
 import { createAsset } from "../utils/assetApi";
@@ -65,23 +66,21 @@ function CreateAsset() {
         required
       />
 
-      <label className={formStyles.label}>
-        Description
-        <textarea
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          placeholder="Main production line hydraulic press"
-          rows={5}
-          required
-          className={`${formStyles.control} ${formStyles.textarea}`}
-        />
-      </label>
+      <TextAreaField
+        label="Description"
+        value={description}
+        onChange={setDescription}
+        placeholder="Main production line hydraulic press"
+        rows={5}
+        required
+      />
 
       <Select
         labelText="Status"
         value={active}
         onChange={(e) => setActive(e.target.value)}
         options={ACTIVE_OPTIONS}
+        required
       />
 
       {error ? (

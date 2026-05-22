@@ -10,6 +10,7 @@ import Header from "./components/header/Header";
 import ProtectedRoute from "./components/shared/ProtectedRoute";
 import CreateLog from "./components/logsComponents/CreateLog";
 import CreateAsset from "./pages/CreateAsset";
+import CreateEmployee from "./pages/CreateEmployee";
 
 function App() {
   return (
@@ -43,6 +44,10 @@ function App() {
                   {/* MANAGER+ */}
                   <Route element={<ProtectedRoute requiredRole="MANAGER" />}>
                     <Route path="assets/create" element={<CreateAsset />} />
+                    <Route
+                      path="employees/create"
+                      element={<CreateEmployee />}
+                    />
                     <Route
                       path="employees/:id/logs"
                       element={<EmployeeLogList />}

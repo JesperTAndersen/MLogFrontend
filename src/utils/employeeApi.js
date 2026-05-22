@@ -17,6 +17,17 @@ export function getEmployees(active = null) {
   return apiRequest(url);
 }
 
+export function createEmployee(employeeBody) {
+  if (!employeeBody || typeof employeeBody !== "object") {
+    throw new Error("Employee body is required");
+  }
+
+  return apiRequest(`/auth/register`, {
+    method: "POST",
+    body: employeeBody,
+  });
+}
+
 export function changeEmployeePassword(id, oldPassword, newPassword) {
   if (id === undefined || id === null || id === "") {
     throw new Error("Employee id is required");

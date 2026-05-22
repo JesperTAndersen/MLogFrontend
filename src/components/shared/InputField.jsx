@@ -6,6 +6,7 @@ function InputField({ label, type, value, onChange, placeholder, required }) {
       {label ? (
         <label className={formStyles.label}>
           {label}
+          {required ? <span> *</span> : null}
           <input
             type={type}
             value={value}

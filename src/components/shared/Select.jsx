@@ -5,6 +5,7 @@ function Select({ labelText, value, onChange, options, required }) {
     <>
       <label className={formStyles.label}>
         {labelText}
+        {required ? <span> *</span> : null}
         <select
           className={formStyles.control}
           value={value ?? ""}

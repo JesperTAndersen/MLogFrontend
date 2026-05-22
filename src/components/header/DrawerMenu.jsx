@@ -31,8 +31,8 @@ function DrawerMenu({ isMenuOpen, onClose }) {
               <NavLink to="/assets/create" onClick={onClose}>
                 Create Asset
               </NavLink>
-              <NavLink to="/assets" onClick={onClose}>
-                Create User(PLACEHOLDER)
+              <NavLink to="/employees/create" onClick={onClose}>
+                Create Employee
               </NavLink>
             </>
           ) : null}

@@ -4,6 +4,7 @@ import { createLog } from "../../utils/logApi";
 import { normalizeDate } from "../../utils/formatDateTime";
 import Button from "../shared/Button";
 import Select from "../shared/Select";
+import TextAreaField from "../shared/TextAreaField";
 import formStyles from "../../styles/forms.module.css";
 import styles from "./CreateLog.module.css";
 
@@ -109,16 +110,14 @@ function CreateLog() {
         required
       />
 
-      <label className={formStyles.label}>
-        Comment
-        <textarea
-          value={comment}
-          onChange={(e) => setComment(e.target.value)}
-          placeholder="Routine check"
-          rows={6}
-          className={`${formStyles.control} ${formStyles.textarea}`}
-        />
-      </label>
+      <TextAreaField
+        label="Comment"
+        value={comment}
+        onChange={setComment}
+        placeholder="Routine check"
+        rows={6}
+        required
+      />
 
       {error ? (
         <p className={`${formStyles.message} ${formStyles.error}`}>{error}</p>
