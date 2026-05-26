@@ -3,8 +3,8 @@ import {
   SESSION_EXPIRED_MESSAGE_KEY,
 } from "./sessionMessages";
 
-const AUTH_URL = "http://localhost:7070/api/v1/auth";
-const BASE_URL = "http://localhost:7070/api/v1";
+const AUTH_URL = "https://maintenancelog.heltsort.dk/api/v1/auth";
+const BASE_URL = "https://maintenancelog.heltsort.dk/api/v1";
 const TOKEN_KEY = "jwt";
 
 function isFetchNetworkError(err) {
