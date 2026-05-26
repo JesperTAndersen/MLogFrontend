@@ -87,7 +87,6 @@ function LogCard({ log, showAssetName = false }) {
                 to={`/assets/${assetId}/logs`}
                 className={styles.assetLink}
                 onClick={(e) => e.stopPropagation()}
-                onKeyDown={(e) => e.stopPropagation()}
               >
                 {assetName}
               </Link>
@@ -102,7 +101,6 @@ function LogCard({ log, showAssetName = false }) {
                   to={`/employees/${performedById}`}
                   className={styles.assetLink}
                   onClick={(e) => e.stopPropagation()}
-                  onKeyDown={(e) => e.stopPropagation()}
                   title={performedByName}
                 >
                   {performedByName}

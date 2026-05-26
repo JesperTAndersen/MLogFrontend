@@ -2,6 +2,7 @@ import { useNavigate } from "react-router";
 import { useAuth } from "../../context/authContext";
 import cardStyles from "../assets/AssetCard.module.css";
 import profileStyles from "../../pages/UserProfile.module.css";
+import Button from "../shared/Button";
 import styles from "./EmployeeCard.module.css";
 
 const ROLE_BADGE_CLASS = {
@@ -23,6 +24,11 @@ function EmployeeCard({ employee }) {
 
   const roleClass =
     ROLE_BADGE_CLASS[employee.role] ?? profileStyles.roleAUTHENTICATED;
+
+  function handleViewLogs(e) {
+    e.stopPropagation();
+    navigate(`/employees/${employee.id}/logs`);
+  }
 
   return (
     <>
@@ -50,7 +56,9 @@ function EmployeeCard({ employee }) {
         <div className={styles.right}>
           <span
             className={`${cardStyles.status} ${
-              employee.active ? cardStyles.statusActive : cardStyles.statusInactive
+              employee.active
+                ? cardStyles.statusActive
+                : cardStyles.statusInactive
             }`}
           >
             {employee.active ? "Active" : "Inactive"}
@@ -63,16 +71,12 @@ function EmployeeCard({ employee }) {
           ) : null}
 
           {canViewPerformedLogs ? (
-            <button
+            <Button
               type="button"
               className={`${profileStyles.roleBadge} ${profileStyles.roleAUTHENTICATED} ${styles.viewLogsButton}`}
-              onClick={(e) => {
-                e.stopPropagation();
-                navigate(`/employees/${employee.id}/logs`);
-              }}
-            >
-              View performed logs
-            </button>
+              handler={handleViewLogs}
+              buttonText="View performed logs"
+            />
           ) : null}
         </div>
       </section>

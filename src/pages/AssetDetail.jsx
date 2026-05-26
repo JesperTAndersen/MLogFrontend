@@ -71,7 +71,7 @@ function AssetDetail() {
 
   return (
     <div className={styles.page}>
-      <section className={styles.summary} >
+      <section className={styles.summary}>
         <p className={styles.name}>{asset?.name}</p>
         {asset?.description ? (
           <p className={styles.description}>{asset.description}</p>
@@ -102,23 +102,22 @@ function AssetDetail() {
         isVisible={isAdmin}
         onAssetUpdated={setAsset}
       />
-      
-     
+
       <section className={styles.logs}>
         <>
           <div className={styles.toolbar}>
-            <Select
-              labelText="Status"
-              value={statusFilter ?? ""}
-              onChange={handleStatusChange}
-              options={LOG_STATUS_FILTER_OPTIONS}
-            />
-
             <Select
               labelText="Task type"
               value={taskTypeFilter ?? ""}
               onChange={handleTaskTypeChange}
               options={LOG_TASK_TYPE_FILTER_OPTIONS}
+            />
+            
+            <Select
+              labelText="Status"
+              value={statusFilter ?? ""}
+              onChange={handleStatusChange}
+              options={LOG_STATUS_FILTER_OPTIONS}
             />
 
             {canCreateLog ? (

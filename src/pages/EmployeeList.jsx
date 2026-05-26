@@ -48,8 +48,7 @@ function EmployeeList() {
 
    function rolesFilter(e) {
     const value = e.target.value;
-    if (value === "null") setRoleFilter(null);
-    else setRoleFilter(value === "null" ? null : value);
+    setRoleFilter(value === "null" ? null : value);
   }
 
   if (loading) return <h1>Loading employees…</h1>;
@@ -65,7 +64,7 @@ function EmployeeList() {
           options={EMPLOYEE_STATUS_FILTER_OPTIONS}
         />
         <Select
-          labelText="Filter by status"
+          labelText="Filter by role"
           value={roleFilter ?? "null"}
           onChange={rolesFilter}
           options={EMPLOYEE_ROLE_FILTER_OPTIONS}

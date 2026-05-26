@@ -32,6 +32,10 @@ function getPageTitleFromPath(pathname, authUser) {
   if (pathname === "/assets") return "Assets";
   if (pathname === "/employees") return "Employees";
   if (pathname === "/employees/me") return "Profile";
+  if (pathname === "/logs") return "Search Log";
+  if (pathname === "/assets/create") return "Create Asset";
+  if (pathname === "/employees/create") return "Create Employee";
+
   if (authUser?.id && pathname === `/employees/${authUser.id}`) return "Profile";
   if (pathname.startsWith("/assets/") && pathname.endsWith("/logs")) {
     return "Asset Logs";

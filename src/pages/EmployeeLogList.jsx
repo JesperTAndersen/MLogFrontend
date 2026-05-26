@@ -39,7 +39,9 @@ function EmployeeLogList() {
   const visibleLogs = logs
     .filter((log) => (statusFilter ? log.status === statusFilter : true))
     .filter((log) => (taskTypeFilter ? log.taskType === taskTypeFilter : true))
-    .filter((log) => (assetNameFilter ? log.assetName === assetNameFilter : true));
+    .filter((log) =>
+      assetNameFilter ? log.assetName === assetNameFilter : true,
+    );
 
   useEffect(() => {
     async function fetchLogs() {
@@ -82,7 +84,6 @@ function EmployeeLogList() {
   if (loading) return <h1>Loading logs…</h1>;
   if (error) return <h1>{error}</h1>;
 
-
   const fullName = [employee.firstName, employee.lastName]
     .filter(Boolean)
     .join(" ");
@@ -122,17 +123,13 @@ function EmployeeLogList() {
 
           {visibleLogs.length === 0 ? (
             <p className={styles.empty}>
-              {statusFilter || taskTypeFilter
+              {statusFilter || taskTypeFilter || assetNameFilter
                 ? "No logs match those filters."
                 : "No logs performed by this employee yet."}
             </p>
           ) : (
             visibleLogs.map((log) => (
-              <LogCard
-                key={log.id}
-                log={log}
-                showAssetName
-              />
+              <LogCard key={log.id} log={log} showAssetName />
             ))
           )}
         </>

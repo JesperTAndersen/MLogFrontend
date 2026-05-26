@@ -17,6 +17,11 @@ function AssetAdminActions({ asset, isVisible, onAssetUpdated }) {
     setConfirming(true);
   }
 
+  function cancelConfirm() {
+    if (adminActionLoading) return;
+    setConfirming(false);
+  }
+
   async function toggleActiveStatus() {
     setAdminActionError(null);
 
@@ -45,7 +50,7 @@ function AssetAdminActions({ asset, isVisible, onAssetUpdated }) {
   if (!isVisible) return null;
 
   const isActive = asset?.active === true;
-  const actionVerb = isActive ? "Deactivate" : "Reactivate";
+  const activeButtonText = isActive ? "Deactivate" : "Reactivate";
 
   return (
     <div className={profileStyles.adminActions}>
@@ -57,7 +62,7 @@ function AssetAdminActions({ asset, isVisible, onAssetUpdated }) {
 
       {confirming ? (
         <>
-          <p className={formStyles.message, "center-text"}>Are you sure?</p>
+          <p className={`${formStyles.message} center-text`}>Are you sure?</p>
           <Button
             handler={toggleActiveStatus}
             buttonText={
@@ -68,13 +73,7 @@ function AssetAdminActions({ asset, isVisible, onAssetUpdated }) {
                 : "Yes"
             }
           />
-          <Button
-            handler={() => {
-              if (adminActionLoading) return;
-              setConfirming(false);
-            }}
-            buttonText="Cancel"
-          />
+          <Button handler={cancelConfirm} buttonText="Cancel" />
         </>
       ) : (
         <Button
@@ -84,7 +83,7 @@ function AssetAdminActions({ asset, isVisible, onAssetUpdated }) {
               ? isActive
                 ? "Deactivating…"
                 : "Reactivating…"
-              : `${actionVerb} asset`
+              : `${activeButtonText} asset`
           }
         />
       )}

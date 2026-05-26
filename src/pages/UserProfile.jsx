@@ -1,13 +1,11 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../context/authContext";
 import { useParams } from "react-router";
-import {
-  getEmployeeById,
-  getMe,
-} from "../utils/employeeApi";
+import { getEmployeeById, getMe } from "../utils/employeeApi";
 import EditProfileForm from "../components/employees/EditProfileForm";
 import AdminActions from "../components/employees/AdminActions";
 import PasswordChangeForm from "../components/employees/PasswordChangeForm";
+import Button from "../components/shared/Button";
 import assetDetailStyles from "./AssetDetail.module.css";
 import styles from "./UserProfile.module.css";
 
@@ -95,18 +93,18 @@ function UserProfile() {
           </div>
 
           <div className={styles.summaryRight}>
-            <span className={assetDetailStyles.lastLog}>Employee #{user.id}</span>
+            <span className={assetDetailStyles.lastLog}>
+              Employee #{user.id}
+            </span>
 
             {canManageEmployees ? (
-              <button
+              <Button
                 type="button"
                 className={styles.iconButton}
-                onClick={isEditing ? cancelEditing : startEditing}
-                aria-label={isEditing ? "Cancel editing" : "Edit user"}
+                handler={isEditing ? cancelEditing : startEditing}
                 title={isEditing ? "Cancel" : "Edit"}
-              >
-                Edit
-              </button>
+                buttonText="Edit"
+              />
             ) : null}
           </div>
         </div>
@@ -128,10 +126,7 @@ function UserProfile() {
         onUserUpdated={setUser}
       />
 
-      <PasswordChangeForm
-        employeeId={authUser?.id}
-        isVisible={isOwnProfile}
-      />
+      <PasswordChangeForm employeeId={authUser?.id} isVisible={isOwnProfile} />
     </div>
   );
 }

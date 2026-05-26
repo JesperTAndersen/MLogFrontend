@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { createLog } from "../../utils/logApi";
-import { normalizeDate } from "../../utils/formatDateTime";
+import { normalizeDate, toDateTimeLocalMaxValue } from "../../utils/formatDateTime";
 import Button from "../shared/Button";
 import Select from "../shared/Select";
 import TextAreaField from "../shared/TextAreaField";
@@ -20,16 +20,6 @@ const TASK_TYPE_OPTIONS = [
   { value: "PRODUCTION", label: "Production" },
   { value: "ERROR", label: "Error" },
 ];
-
-function toDateTimeLocalMaxValue(date = new Date()) {
-  const pad2 = (n) => String(n).padStart(2, "0");
-  const yyyy = date.getFullYear();
-  const mm = pad2(date.getMonth() + 1);
-  const dd = pad2(date.getDate());
-  const hh = pad2(date.getHours());
-  const min = pad2(date.getMinutes());
-  return `${yyyy}-${mm}-${dd}T${hh}:${min}`;
-}
 
 function CreateLog() {
   const navigate = useNavigate();

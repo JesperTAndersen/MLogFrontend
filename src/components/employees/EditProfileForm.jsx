@@ -101,14 +101,13 @@ function EditProfileForm({ user, isEditing, onCancelEditing, onUserUpdated }) {
 
       <div className={styles.editActions}>
         <Button buttonText={saving ? "Saving…" : "Save"} />
-        <button
+        <Button
           type="button"
           className={styles.secondaryButton}
-          onClick={onCancelEditing}
+          handler={onCancelEditing}
           disabled={saving}
-        >
-          Cancel
-        </button>
+          buttonText="Cancel"
+        />
       </div>
     </form>
   );

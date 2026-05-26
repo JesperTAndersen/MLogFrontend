@@ -18,3 +18,13 @@ export function normalizeDate(value) {
   if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(value)) return `${value}:00`;
   return value;
 }
+
+export function toDateTimeLocalMaxValue(date = new Date()) {
+  const pad2 = (n) => String(n).padStart(2, "0");
+  const yyyy = date.getFullYear();
+  const mm = pad2(date.getMonth() + 1);
+  const dd = pad2(date.getDate());
+  const hh = pad2(date.getHours());
+  const min = pad2(date.getMinutes());
+  return `${yyyy}-${mm}-${dd}T${hh}:${min}`;
+}

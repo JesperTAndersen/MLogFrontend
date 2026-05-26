@@ -1,9 +1,10 @@
 import buttonStyles from "../../styles/buttons.module.css";
 
-function Button({ handler, className, buttonText }) {
+function Button({ handler, className, buttonText, type = "submit", ...rest }) {
   return (
     <button
-      type="submit"
+      {...rest}
+      type={type}
       onClick={typeof handler === "function" ? handler : undefined}
       className={className ?? buttonStyles.primary}
     >

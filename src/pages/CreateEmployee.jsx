@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router";
 import Button from "../components/shared/Button";
 import InputField from "../components/shared/InputField";
@@ -12,21 +12,18 @@ function CreateEmployee() {
   const navigate = useNavigate();
   const { hasRole } = useAuth();
 
-  const roleOptions = useMemo(() => {
-    const base = [
-      { value: "AUTHENTICATED", label: "Auth Employee" },
-      { value: "TECHNICIAN", label: "Technician" },
-    ];
+  const isAdmin = hasRole?.("ADMIN") === true;
 
-    if (hasRole?.("ADMIN") === true) {
-      base.push(
-        { value: "MANAGER", label: "Manager" },
-        { value: "ADMIN", label: "Admin" },
-      );
-    }
-
-    return base;
-  }, [hasRole]);
+  const roleOptions = [
+    { value: "AUTHENTICATED", label: "Auth Employee" },
+    { value: "TECHNICIAN", label: "Technician" },
+    ...(isAdmin
+      ? [
+          { value: "MANAGER", label: "Manager" },
+          { value: "ADMIN", label: "Admin" },
+        ]
+      : []),
+  ];
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");

@@ -8,8 +8,22 @@ import {
 } from "../../utils/employeeApi";
 
 function AdminActions({ user, isVisible, onUserUpdated }) {
+  const [confirming, setConfirming] = useState(false);
   const [adminActionLoading, setAdminActionLoading] = useState(false);
   const [adminActionError, setAdminActionError] = useState(null);
+
+  function beginConfirm() {
+    setAdminActionError(null);
+    if (!isVisible) return;
+    if (adminActionLoading) return;
+    if (!user?.id) return;
+    setConfirming(true);
+  }
+
+  function cancelConfirm() {
+    if (adminActionLoading) return;
+    setConfirming(false);
+  }
 
   async function toggleActiveStatus() {
     setAdminActionError(null);
@@ -27,6 +41,8 @@ function AdminActions({ user, isVisible, onUserUpdated }) {
         await reactivateEmployee(user.id);
         onUserUpdated?.({ ...user, active: true });
       }
+
+      setConfirming(false);
     } catch (err) {
       setAdminActionError(err?.message ?? "Failed to update status");
     } finally {
@@ -36,6 +52,9 @@ function AdminActions({ user, isVisible, onUserUpdated }) {
 
   if (!isVisible) return null;
 
+  const isActive = user?.active === true;
+  const activeButtonText = isActive ? "Deactivate" : "Reactivate";
+
   return (
     <div className={styles.adminActions}>
       {adminActionError ? (
@@ -44,18 +63,33 @@ function AdminActions({ user, isVisible, onUserUpdated }) {
         </p>
       ) : null}
 
-      <Button
-        handler={toggleActiveStatus}
-        buttonText={
-          adminActionLoading
-            ? user.active
-              ? "Deactivating…"
-              : "Reactivating…"
-            : user.active
-              ? "Deactivate user"
-              : "Reactivate user"
-        }
-      />
+      {confirming ? (
+        <>
+          <p className={`${formStyles.message} center-text`}>Are you sure?</p>
+          <Button
+            handler={toggleActiveStatus}
+            buttonText={
+              adminActionLoading
+                ? isActive
+                  ? "Deactivating…"
+                  : "Reactivating…"
+                : "Yes"
+            }
+          />
+          <Button type="button" handler={cancelConfirm} buttonText="Cancel" />
+        </>
+      ) : (
+        <Button
+          handler={beginConfirm}
+          buttonText={
+            adminActionLoading
+              ? isActive
+                ? "Deactivating…"
+                : "Reactivating…"
+              : `${activeButtonText} user`
+          }
+        />
+      )}
     </div>
   );
 }
