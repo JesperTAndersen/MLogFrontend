@@ -1,13 +1,11 @@
-import { apiRequest } from "./apiClient";
+import { apiRequest, assertPositiveIntegerId } from "./apiClient";
 
 export function getMe() {
   return apiRequest("/employees/me");
 }
 
 export function getEmployeeById(id) {
-  if (id === undefined || id === null || id === "") {
-    throw new Error("getEmployeeById(id) requires an id");
-  }
+  assertPositiveIntegerId("id", id, "getEmployeeById");
 
   return apiRequest(`/employees/${id}`);
 }
@@ -29,9 +27,7 @@ export function createEmployee(employeeBody) {
 }
 
 export function changeEmployeePassword(id, oldPassword, newPassword) {
-  if (id === undefined || id === null || id === "") {
-    throw new Error("Employee id is required");
-  }
+  assertPositiveIntegerId("id", id, "changeEmployeePassword");
   if (!oldPassword) {
     throw new Error("Old password is required");
   }
@@ -46,9 +42,7 @@ export function changeEmployeePassword(id, oldPassword, newPassword) {
 }
 
 export function updateEmployee(id, employeeBody) {
-  if (id === undefined || id === null || id === "") {
-    throw new Error("Employee id is required");
-  }
+  assertPositiveIntegerId("id", id, "updateEmployee");
 
   return apiRequest(`/employees/${id}`, {
     method: "PUT",
@@ -57,9 +51,7 @@ export function updateEmployee(id, employeeBody) {
 }
 
 export function deactivateEmployee(id) {
-  if (id === undefined || id === null || id === "") {
-    throw new Error("Employee id is required");
-  }
+  assertPositiveIntegerId("id", id, "deactivateEmployee");
 
   return apiRequest(`/employees/${id}`, {
     method: "DELETE",
@@ -67,9 +59,7 @@ export function deactivateEmployee(id) {
 }
 
 export function reactivateEmployee(id) {
-  if (id === undefined || id === null || id === "") {
-    throw new Error("Employee id is required");
-  }
+  assertPositiveIntegerId("id", id, "reactivateEmployee");
 
   return apiRequest(`/employees/${id}`, {
     method: "PATCH",

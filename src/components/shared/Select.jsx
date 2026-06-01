@@ -1,18 +1,33 @@
 import formStyles from "../../styles/forms.module.css";
 
-function Select({ labelText, value, onChange, options, required }) {
+function Select({
+  labelText,
+  value,
+  defaultValue,
+  onChange,
+  options,
+  required,
+  name = "choice",
+}) {
+  const selectProps = {
+    className: formStyles.control,
+    name,
+    onChange,
+    required,
+  };
+
+  if (value !== undefined) {
+    selectProps.value = value ?? "";
+  } else {
+    selectProps.defaultValue = defaultValue ?? "";
+  }
+
   return (
     <>
       <label className={formStyles.label}>
         {labelText}
         {required ? <span> *</span> : null}
-        <select
-          className={formStyles.control}
-          value={value ?? ""}
-          name="choice"
-          onChange={onChange}
-          required={required}
-        >
+        <select {...selectProps}>
           {options.map((option) => (
             <option key={option.value} value={option.value}>
               {option.label}

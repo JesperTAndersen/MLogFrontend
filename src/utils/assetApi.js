@@ -1,4 +1,4 @@
-import { apiRequest } from "./apiClient";
+import { apiRequest, assertPositiveIntegerId } from "./apiClient";
 
 export function getAssets(active = null) {
   const url = active !== null ? `/assets?active=${active}` : "/assets";
@@ -6,6 +6,7 @@ export function getAssets(active = null) {
 }
 
 export function getAssetById(id) {
+  assertPositiveIntegerId("id", id, "getAssetById");
   return apiRequest(`/assets/${id}`);
 }
 
@@ -21,9 +22,7 @@ export function createAsset(assetBody) {
 }
 
 export function deactivateAsset(id) {
-  if (id === undefined || id === null || id === "") {
-    throw new Error("Asset id is required");
-  }
+  assertPositiveIntegerId("id", id, "deactivateAsset");
 
   return apiRequest(`/assets/${id}`, {
     method: "DELETE",
@@ -31,9 +30,7 @@ export function deactivateAsset(id) {
 }
 
 export function reactivateAsset(id) {
-  if (id === undefined || id === null || id === "") {
-    throw new Error("Asset id is required");
-  }
+  assertPositiveIntegerId("id", id, "reactivateAsset");
 
   return apiRequest(`/assets/${id}`, {
     method: "PATCH",

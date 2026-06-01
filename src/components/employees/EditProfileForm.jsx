@@ -1,14 +1,36 @@
 import { useState } from "react";
 import Button from "../shared/Button";
+import Select from "../shared/Select";
 import formStyles from "../../styles/forms.module.css";
 import styles from "../../pages/UserProfile.module.css";
 import { updateEmployee } from "../../utils/employeeApi";
 import ProfileFieldRow from "./ProfileFieldRow";
 import ProfileValueRow from "./ProfileValueRow";
+import { useAuth } from "../../context/authContext";
 
 function EditProfileForm({ user, isEditing, onCancelEditing, onUserUpdated }) {
   const [saving, setSaving] = useState(false);
   const [editError, setEditError] = useState(null);
+  const { hasRole } = useAuth();
+
+  const isAdmin = hasRole?.("ADMIN") === true;
+  const isManagerPlus = hasRole?.("MANAGER") === true;
+
+  const canEditRole =
+    isAdmin ||
+    (isManagerPlus &&
+      (user?.role === "TECHNICIAN" || user?.role === "AUTHENTICATED"));
+
+  const roleOptions = [
+    { value: "AUTHENTICATED", label: "Auth Employee" },
+    { value: "TECHNICIAN", label: "Technician" },
+    ...(isAdmin
+      ? [
+          { value: "MANAGER", label: "Manager" },
+          { value: "ADMIN", label: "Admin" },
+        ]
+      : []),
+  ];
 
   async function saveEdits(e) {
     e?.preventDefault?.();
@@ -22,10 +44,14 @@ function EditProfileForm({ user, isEditing, onCancelEditing, onUserUpdated }) {
     const lastName = String(formData.get("lastName") ?? "").trim();
     const email = String(formData.get("email") ?? "").trim();
     const phone = String(formData.get("phone") ?? "").trim();
+    const role = canEditRole
+      ? String(formData.get("role") ?? "").trim()
+      : user.role;
 
     if (!firstName) return setEditError("First name is required.");
     if (!lastName) return setEditError("Last name is required.");
     if (!email) return setEditError("Email is required.");
+    if (canEditRole && !role) return setEditError("Role is required.");
 
     try {
       setSaving(true);
@@ -35,7 +61,7 @@ function EditProfileForm({ user, isEditing, onCancelEditing, onUserUpdated }) {
         lastName,
         email,
         phone,
-        role: user.role,
+        role,
         active: user.active,
       });
       onUserUpdated?.(updated);
@@ -92,6 +118,16 @@ function EditProfileForm({ user, isEditing, onCancelEditing, onUserUpdated }) {
         name="phone"
         defaultValue={user.phone ?? ""}
       />
+
+      {canEditRole ? (
+        <Select
+          labelText="Role"
+          name="role"
+          defaultValue={user.role ?? ""}
+          options={roleOptions}
+          required
+        />
+      ) : null}
 
       {editError ? (
         <p className={`${formStyles.message} ${formStyles.error}`}>

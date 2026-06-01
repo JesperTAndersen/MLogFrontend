@@ -1,6 +1,7 @@
-import { apiRequest } from "./apiClient";
+import { apiRequest, assertPositiveIntegerId } from "./apiClient";
 
 export function getLogsForAsset(id, status = null, taskType = null) {
+  assertPositiveIntegerId("id", id, "getLogsForAsset");
   const params = new URLSearchParams();
   if (status) params.set("status", status);
   if (taskType) params.set("taskType", taskType);
@@ -11,9 +12,7 @@ export function getLogsForAsset(id, status = null, taskType = null) {
 }
 
 export function createLog(assetId, logBody) {
-  if (assetId === undefined || assetId === null || assetId === "") {
-    throw new Error("createLog(assetId, logBody) requires an assetId");
-  }
+  assertPositiveIntegerId("assetId", assetId, "createLog");
 
   return apiRequest(`/assets/${assetId}/logs`, {
     method: "POST",
@@ -22,14 +21,13 @@ export function createLog(assetId, logBody) {
 }
 
 export function getLogsForEmployee(employeeId) {
+  assertPositiveIntegerId("employeeId", employeeId, "getLogsForEmployee");
   const url = `/logs/employee/${employeeId}`;
   return apiRequest(url);
 }
 
 export function getLogById(logId) {
-  if (logId === undefined || logId === null || logId === "") {
-    throw new Error("getLogById(logId) requires a logId");
-  }
+  assertPositiveIntegerId("logId", logId, "getLogById");
 
   return apiRequest(`/logs/${logId}`);
 }

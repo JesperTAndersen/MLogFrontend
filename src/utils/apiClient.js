@@ -3,13 +3,16 @@ import {
   SESSION_EXPIRED_MESSAGE_KEY,
 } from "./sessionMessages";
 
-const AUTH_URL = "https://maintenancelog.heltsort.dk/api/v1/auth";
-const BASE_URL = "https://maintenancelog.heltsort.dk/api/v1";
-const TOKEN_KEY = "jwt";
+const IS_DEPLOYED = window.location.hostname !== "localhost";
+const BASE_URL = IS_DEPLOYED
+  ? "https://maintenancelog.heltsort.dk/api/v1"
+  : "http://localhost:7070/api/v1";
 
-function isFetchNetworkError(err) {
-  return err instanceof TypeError; //what browser return for fetch/cors errors
-}
+const AUTH_URL = IS_DEPLOYED
+  ? "https://maintenancelog.heltsort.dk/api/v1/auth"
+  : "http://localhost:7070/api/v1/auth";
+
+const TOKEN_KEY = "jwt";
 
 function setToken(jwt) {
   localStorage.setItem(TOKEN_KEY, jwt);
@@ -21,43 +24,6 @@ function readToken() {
 
 export function removeToken() {
   localStorage.removeItem(TOKEN_KEY);
-}
-
-function redirectToLoginWithSessionExpiredMessage() {
-  removeToken();
-
-  try {
-    sessionStorage.setItem(
-      SESSION_EXPIRED_MESSAGE_KEY,
-      SESSION_EXPIRED_MESSAGE,
-    );
-  } catch {
-    // ignore errors
-  }
-
-  if (typeof window === "undefined") return;
-  const path = window.location?.pathname ?? "";
-  if (path === "/login") return;
-
-  window.location.assign("/login");
-}
-
-async function readBackendErrorMessage(response) {
-  const rawText = await response.text().catch(() => "");
-  const text = String(rawText ?? "").trim();
-  if (!text) return "";
-
-  try {
-    const parsed = JSON.parse(text);
-    if (parsed && typeof parsed === "object") {
-      const message = String(parsed.message ?? "").trim();
-      if (message) return message;
-    }
-  } catch {
-    // ignore parse errors
-  }
-
-  return text;
 }
 
 export async function loginAPI(credentials) {
@@ -146,20 +112,40 @@ export async function apiRequest(url, { method = "GET", body } = {}) {
 
     if (response.status === 409) {
       const backendMessage = await readBackendErrorMessage(response);
-      throw new Error(
-        backendMessage || "That request conflicted with existing data.",
-      );
+      const userMessage = isUserSafeBackendMessage(backendMessage)
+        ? backendMessage
+        : "That request conflicted with existing data.";
+      throw new Error(userMessage, {
+        cause: {
+          type: "API_ERROR",
+          status: response.status,
+          backendMessage,
+          method,
+          url: finalUrl,
+        },
+      });
     }
     if (response.status === 400) {
       const backendMessage = await readBackendErrorMessage(response);
-      throw new Error(backendMessage || "That request was invalid.");
+      const userMessage = isUserSafeBackendMessage(backendMessage)
+        ? backendMessage
+        : "That request was invalid.";
+      throw new Error(userMessage, {
+        cause: {
+          type: "API_ERROR",
+          status: response.status,
+          backendMessage,
+          method,
+          url: finalUrl,
+        },
+      });
     }
 
     if (response.status === 503)
       throw new Error(
         "Service is temporarily unavailable. Please try again later.",
       );
-      
+
     if (response.status >= 500)
       throw new Error(
         "Something went wrong. Please try again later or contact support.",
@@ -174,4 +160,135 @@ export async function apiRequest(url, { method = "GET", body } = {}) {
 
   if (response.status === 204) return null;
   return response.json();
+}
+
+function isFetchNetworkError(err) {
+  return err instanceof TypeError; //what browser return for fetch/cors errors
+}
+
+function redirectToLoginWithSessionExpiredMessage() {
+  removeToken();
+
+  try {
+    sessionStorage.setItem(
+      SESSION_EXPIRED_MESSAGE_KEY,
+      SESSION_EXPIRED_MESSAGE,
+    );
+  } catch {
+    // ignore errors
+  }
+
+  if (typeof window === "undefined") return;
+  const path = window.location?.pathname ?? "";
+  if (path === "/login") return;
+
+  window.location.assign("/login");
+}
+
+async function readBackendErrorMessage(response) {
+  const rawText = await response.text().catch(() => "");
+  const text = String(rawText ?? "").trim();
+  if (!text) return "";
+
+  try {
+    const parsed = JSON.parse(text);
+    if (parsed && typeof parsed === "object") {
+      const message = String(parsed.message ?? "").trim();
+      if (message) return message;
+    }
+  } catch {
+    // ignore parse errors
+  }
+
+  return text;
+}
+
+function isUserSafeBackendMessage(message) {
+  const trimmed = String(message ?? "").trim();
+  if (!trimmed) return false;
+  if (trimmed.length > 160) return false;
+
+  const lower = trimmed.toLowerCase();
+  const blockedSubstrings = [
+    "for input string",
+    "numberformatexception",
+    "nullpointerexception",
+    "illegalargumentexception",
+    "constraintviolationexception",
+    "stacktrace",
+    "org.",
+    "java.",
+    "exception",
+  ];
+  if (blockedSubstrings.some((s) => lower.includes(s))) return false;
+
+  return true;
+}
+
+function isMissingRequiredValue(value) {
+  if (value === undefined || value === null) return true;
+  if (typeof value === "number" && Number.isNaN(value)) return true;
+  if (typeof value === "string" && value.trim() === "") return true;
+  return false;
+}
+
+function assertRequiredParam(paramName, value, context = "function") {
+  if (!paramName || typeof paramName !== "string") {
+    throw new Error(
+      "Something went wrong. Please refresh the page and try again.",
+      {
+        cause: {
+          type: "CLIENT_VALIDATION_ERROR",
+          reason: "assertRequiredParam called without a valid paramName",
+          context,
+          paramName,
+        },
+      },
+    );
+  }
+
+  if (isMissingRequiredValue(value)) {
+    throw new Error("Required ID is missing. Please go back and try again.", {
+      cause: {
+        type: "CLIENT_VALIDATION_ERROR",
+        reason: "MISSING_REQUIRED_PARAM",
+        context,
+        paramName,
+      },
+    });
+  }
+}
+
+function isPositiveIntegerLike(value) {
+  if (typeof value === "number") {
+    return Number.isInteger(value) && value > 0;
+  }
+
+  if (typeof value === "string") {
+    const trimmed = value.trim();
+    if (!/^\d+$/.test(trimmed)) return false;
+    const parsed = Number.parseInt(trimmed, 10);
+    return parsed > 0;
+  }
+
+  return false;
+}
+
+export function assertPositiveIntegerId(
+  paramName,
+  value,
+  context = "function",
+) {
+  assertRequiredParam(paramName, value, context);
+
+  if (!isPositiveIntegerLike(value)) {
+    throw new Error("Invalid ID. Please check the link and try again.", {
+      cause: {
+        type: "CLIENT_VALIDATION_ERROR",
+        reason: "INVALID_ID_FORMAT",
+        context,
+        paramName,
+      },
+    });
+  }
 }
