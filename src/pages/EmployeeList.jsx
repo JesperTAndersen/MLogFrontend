@@ -3,6 +3,7 @@ import EmployeeCard from "../components/employees/EmployeeCard";
 import Select from "../components/shared/Select";
 import styles from "./AssetList.module.css";
 import { getEmployees } from "../utils/employeeApi";
+import feedbackStyles from "../styles/feedback.module.css";
 
 const EMPLOYEE_STATUS_FILTER_OPTIONS = [
     { value: "null", label: "All" },
@@ -52,7 +53,12 @@ function EmployeeList() {
   }
 
   if (loading) return <h1>Loading employees…</h1>;
-  if (error) return <h1>{error}</h1>;
+  if (error)
+    return (
+      <section className={feedbackStyles.card}>
+        <p className={feedbackStyles.errorText}>{error}</p>
+      </section>
+    );
 
   return (
     <>

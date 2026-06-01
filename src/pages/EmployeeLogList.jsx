@@ -5,6 +5,7 @@ import { getLogsForEmployee } from "../utils/logApi";
 import LogCard from "../components/logsComponents/LogCard";
 import Select from "../components/shared/Select";
 import styles from "./AssetDetail.module.css";
+import feedbackStyles from "../styles/feedback.module.css";
 
 const LOG_STATUS_FILTER_OPTIONS = [
   { value: "", label: "All" },
@@ -82,7 +83,14 @@ function EmployeeLogList() {
   }
 
   if (loading) return <h1>Loading logs…</h1>;
-  if (error) return <h1>{error}</h1>;
+  if (error)
+    return (
+      <div className={styles.page}>
+        <section className={feedbackStyles.card}>
+          <p className={feedbackStyles.errorText}>{error}</p>
+        </section>
+      </div>
+    );
 
   const fullName = [employee.firstName, employee.lastName]
     .filter(Boolean)

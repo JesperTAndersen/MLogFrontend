@@ -14,12 +14,6 @@ function EditProfileForm({ user, isEditing, onCancelEditing, onUserUpdated }) {
   const { hasRole } = useAuth();
 
   const isAdmin = hasRole?.("ADMIN") === true;
-  const isManagerPlus = hasRole?.("MANAGER") === true;
-
-  const canEditRole =
-    isAdmin ||
-    (isManagerPlus &&
-      (user?.role === "TECHNICIAN" || user?.role === "AUTHENTICATED"));
 
   const roleOptions = [
     { value: "AUTHENTICATED", label: "Auth Employee" },
@@ -44,14 +38,13 @@ function EditProfileForm({ user, isEditing, onCancelEditing, onUserUpdated }) {
     const lastName = String(formData.get("lastName") ?? "").trim();
     const email = String(formData.get("email") ?? "").trim();
     const phone = String(formData.get("phone") ?? "").trim();
-    const role = canEditRole
-      ? String(formData.get("role") ?? "").trim()
-      : user.role;
+    const role =  String(formData.get("role") ?? "").trim()
+      
 
     if (!firstName) return setEditError("First name is required.");
     if (!lastName) return setEditError("Last name is required.");
     if (!email) return setEditError("Email is required.");
-    if (canEditRole && !role) return setEditError("Role is required.");
+    if (!role) return setEditError("Role is required.");
 
     try {
       setSaving(true);
@@ -119,7 +112,7 @@ function EditProfileForm({ user, isEditing, onCancelEditing, onUserUpdated }) {
         defaultValue={user.phone ?? ""}
       />
 
-      {canEditRole ? (
+      
         <Select
           labelText="Role"
           name="role"
@@ -127,7 +120,7 @@ function EditProfileForm({ user, isEditing, onCancelEditing, onUserUpdated }) {
           options={roleOptions}
           required
         />
-      ) : null}
+      
 
       {editError ? (
         <p className={`${formStyles.message} ${formStyles.error}`}>

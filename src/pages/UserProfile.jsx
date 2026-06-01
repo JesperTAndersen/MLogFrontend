@@ -8,6 +8,7 @@ import PasswordChangeForm from "../components/employees/PasswordChangeForm";
 import Button from "../components/shared/Button";
 import assetDetailStyles from "./AssetDetail.module.css";
 import styles from "./UserProfile.module.css";
+import feedbackStyles from "../styles/feedback.module.css";
 
 const ROLE_BADGE_CLASS = {
   ADMIN: styles.roleADMIN,
@@ -64,7 +65,14 @@ function UserProfile() {
   }
 
   if (loading) return <h1>Loading profile…</h1>;
-  if (error) return <h1>{error}</h1>;
+  if (error)
+    return (
+      <div className={assetDetailStyles.page}>
+        <section className={feedbackStyles.card}>
+          <p className={feedbackStyles.errorText}>{error}</p>
+        </section>
+      </div>
+    );
   if (!user) return <h1>Profile not found</h1>;
 
   const fullName = [user.firstName, user.lastName].filter(Boolean).join(" ");

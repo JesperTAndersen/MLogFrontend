@@ -8,6 +8,7 @@ import styles from "./AssetDetail.module.css";
 import { formatDateTime } from "../utils/formatDateTime";
 import { useAuth } from "../context/authContext";
 import AssetAdminActions from "../components/assets/AssetAdminActions";
+import feedbackStyles from "../styles/feedback.module.css";
 
 const LOG_STATUS_FILTER_OPTIONS = [
   { value: "", label: "All" },
@@ -67,7 +68,14 @@ function AssetDetail() {
   }
 
   if (loading) return <h1>Loading assets…</h1>;
-  if (error) return <h1>{error}</h1>;
+  if (error)
+    return (
+      <div className={styles.page}>
+        <section className={feedbackStyles.card}>
+          <p className={feedbackStyles.errorText}>{error}</p>
+        </section>
+      </div>
+    );
 
   return (
     <div className={styles.page}>

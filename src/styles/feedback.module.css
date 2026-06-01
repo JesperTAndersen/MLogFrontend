@@ -1,0 +1,18 @@
+.card {
+  margin: 12px 16px;
+  padding: 14px 16px;
+
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.errorText {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  line-height: 1.35;
+  color: var(--color-error);
+}
