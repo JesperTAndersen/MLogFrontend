@@ -11,7 +11,7 @@ export function getEmployeeById(id) {
 }
 
 export function getEmployees(active = null) {
-  const url = active !==null ? `/employees?active=${active}` : "/employees";
+  const url = active !== null ? `/employees?active=${active}` : "/employees";
   return apiRequest(url);
 }
 
@@ -43,7 +43,6 @@ export function changeEmployeePassword(id, oldPassword, newPassword) {
 
 export function updateEmployee(id, employeeBody) {
   assertPositiveIntegerId("id", id, "updateEmployee");
-
   return apiRequest(`/employees/${id}`, {
     method: "PUT",
     body: employeeBody,

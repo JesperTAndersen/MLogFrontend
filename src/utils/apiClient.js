@@ -112,6 +112,7 @@ export async function apiRequest(url, { method = "GET", body } = {}) {
 
     if (response.status === 409) {
       const backendMessage = await readBackendErrorMessage(response);
+
       const userMessage = isUserSafeBackendMessage(backendMessage)
         ? backendMessage
         : "That request conflicted with existing data.";
@@ -152,10 +153,19 @@ export async function apiRequest(url, { method = "GET", body } = {}) {
       );
 
     const backendMessage = await readBackendErrorMessage(response);
-    throw new Error(
-      backendMessage ||
-        `Request failed (${response.status}). Please try again.`,
-    );
+    const fallbackMessage = `Request failed (${response.status}). Please try again.`;
+    const userMessage = isUserSafeBackendMessage(backendMessage)
+      ? backendMessage
+      : fallbackMessage;
+    throw new Error(userMessage, {
+      cause: {
+        type: "API_ERROR",
+        status: response.status,
+        backendMessage,
+        method,
+        url: finalUrl,
+      },
+    });
   }
 
   if (response.status === 204) return null;
@@ -221,7 +231,6 @@ function isUserSafeBackendMessage(message) {
     "exception",
   ];
   if (blockedSubstrings.some((s) => lower.includes(s))) return false;
-
   return true;
 }
 
@@ -270,7 +279,6 @@ function isPositiveIntegerLike(value) {
     const parsed = Number.parseInt(trimmed, 10);
     return parsed > 0;
   }
-
   return false;
 }
 
