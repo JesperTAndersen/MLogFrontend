@@ -27,35 +27,50 @@ function AssetDetail() {
   const [asset, setAsset] = useState(null);
   const [logs, setLogs] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadingLogs, setLoadingLogs] = useState(false);
   const [error, setError] = useState(null);
   const [statusFilter, setStatusFilter] = useState(null);
   const [taskTypeFilter, setTaskTypeFilter] = useState(null);
-
   const { hasRole } = useAuth();
+  const { id } = useParams();
 
   const canCreateLog = hasRole("TECHNICIAN") && asset?.active === true;
   const isAdmin = hasRole("ADMIN");
 
-  const { id } = useParams();
-
   useEffect(() => {
-    async function fetchData() {
+    async function fetchAsset() {
       try {
         setLoading(true);
-        const [assetData, logsData] = await Promise.all([
-          getAssetById(id),
-          getLogsForAsset(id, statusFilter, taskTypeFilter),
-        ]);
+        setError(null);
+        const assetData = await getAssetById(id);
         setAsset(assetData);
-        setLogs(logsData);
       } catch (err) {
         setError(err?.message ?? "Failed to load asset details");
       } finally {
         setLoading(false);
       }
     }
-    fetchData();
-  }, [id, taskTypeFilter, statusFilter]);
+    fetchAsset();
+  }, [id]);
+
+  useEffect(() => {
+    async function fetchLogs() {
+      try {
+        setLoadingLogs(true);
+        const logsData = await getLogsForAsset(
+          id,
+          statusFilter,
+          taskTypeFilter,
+        );
+        setLogs(logsData);
+      } catch (err) {
+        setError(err?.message ?? "Failed to load logs");
+      } finally {
+        setLoadingLogs(false);
+      }
+    }
+    fetchLogs();
+  }, [id, statusFilter, taskTypeFilter]);
 
   function handleTaskTypeChange(e) {
     const value = e.target.value;
@@ -67,7 +82,8 @@ function AssetDetail() {
     setStatusFilter(value === "" ? null : value);
   }
 
-  if (loading) return <h1>Loading assets…</h1>;
+  if (loading) return <h1>Loading asset…</h1>;
+
   if (error)
     return (
       <div className={styles.page}>
@@ -81,26 +97,27 @@ function AssetDetail() {
     <div className={styles.page}>
       <section className={styles.summary}>
         <p className={styles.name}>{asset?.name}</p>
-        {asset?.description ? (
+
+        {asset?.description && (
           <p className={styles.description}>{asset.description}</p>
-        ) : null}
+        )}
 
         <div className={styles.meta}>
           {asset?.active === true ? (
             <span className={`${styles.status} ${styles.statusActive}`}>
               Active
             </span>
-          ) : asset?.active === false ? (
+          ) : (
             <span className={`${styles.status} ${styles.statusInactive}`}>
               Inactive
             </span>
-          ) : null}
+          )}
 
-          {asset?.lastLogDate ? (
+          {asset?.lastLogDate && (
             <span className={styles.lastLog}>
               Last log: {formatDateTime(asset.lastLogDate)}
             </span>
-          ) : null}
+          )}
         </div>
       </section>
 
@@ -112,44 +129,44 @@ function AssetDetail() {
       />
 
       <section className={styles.logs}>
-        <>
-          <div className={styles.toolbar}>
-            <Select
-              labelText="Task type"
-              value={taskTypeFilter ?? ""}
-              onChange={handleTaskTypeChange}
-              options={LOG_TASK_TYPE_FILTER_OPTIONS}
-            />
-            
-            <Select
-              labelText="Status"
-              value={statusFilter ?? ""}
-              onChange={handleStatusChange}
-              options={LOG_STATUS_FILTER_OPTIONS}
-            />
+        <div className={styles.toolbar}>
+          <Select
+            labelText="Task type"
+            value={taskTypeFilter ?? ""}
+            onChange={handleTaskTypeChange}
+            options={LOG_TASK_TYPE_FILTER_OPTIONS}
+          />
 
-            {canCreateLog ? (
-              <Link
-                to={`/assets/${id}/createlog`}
-                className={`${styles.createLog} ${styles.createLogInline}`}
-              >
-                Create log
-              </Link>
-            ) : null}
-          </div>
+          <Select
+            labelText="Status"
+            value={statusFilter ?? ""}
+            onChange={handleStatusChange}
+            options={LOG_STATUS_FILTER_OPTIONS}
+          />
 
-          {logs.length === 0 ? (
-            <p className={styles.empty}>
-              {statusFilter || taskTypeFilter
-                ? "No logs match those filters."
-                : "No logs for this asset yet."}
-            </p>
-          ) : (
-            logs.map((log) => (
-              <LogCard key={log.id} log={log} showAssetName={false} />
-            ))
+          {canCreateLog && (
+            <Link
+              to={`/assets/${id}/createlog`}
+              className={`${styles.createLog} ${styles.createLogInline}`}
+            >
+              Create log
+            </Link>
           )}
-        </>
+        </div>
+
+        {loadingLogs && <p className={styles.loading}>Updating logs...</p>}
+
+        {logs.length === 0 ? (
+          <p className={styles.empty}>
+            {statusFilter || taskTypeFilter
+              ? "No logs match those filters."
+              : "No logs for this asset yet."}
+          </p>
+        ) : (
+          logs.map((log) => (
+            <LogCard key={log.id} log={log} showAssetName={false} />
+          ))
+        )}
       </section>
     </div>
   );
