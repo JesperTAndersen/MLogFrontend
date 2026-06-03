@@ -47,7 +47,7 @@ function AssetList() {
 
   return (
     <>
-      <div className={styles.toolbar}>
+      <div className={styles.toolbarSingle}>
         <Select
           labelText="Filter by status"
           value={activeFilter ?? "null"}
