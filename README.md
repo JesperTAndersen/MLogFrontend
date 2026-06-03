@@ -1,15 +1,18 @@
-# Maintenance Log System — Frontend
+# Maintenance Log System - Frontend
 
-This repository contains the React frontend for the **Maintenance Log System** ("Rapid Maintenance").
-It is a single-page application that authenticates with JWT and consumes the backend REST API to manage **assets**, **maintenance logs**, and **employees** with **role-based access control**.
+This repository contains the frontend application for **Rapid Maintenance**, a full-stack maintenance prototype management system developed for industrial maintenance workflows.
+
+The application provides an intuitive user interface for managing assets, recording maintenance activities, and administering employee information. It supports multiple user roles, including technicians, managers, and administrators, with access controlled through a role-based authorization system.
+
+As a React single-page application (SPA), the frontend authenticates users using JWT and interacts with the backend REST API to deliver a secure and responsive user experience.
 
 ## Links
 
-- Deployed application: https://mlf.heltsort.dk/
-- Routes overview: https://maintenancelog.heltsort.dk/routes
-- Project overview video (4 min): [VideoLink](https://youtu.be/FXqS-REKt-w)
-- Portfolio: https://jespertandersen.github.io/Portfolio/
-- Backend repository: https://github.com/JesperTAndersen/MaintenanceLog
+- [Deployed application](https://mlf.heltsort.dk/)
+- [Routes overview](https://maintenancelog.heltsort.dk/routes)
+- [Project overview video (4 min)](https://youtu.be/FXqS-REKt-w)
+- [Portfolio](https://jespertandersen.github.io/Portfolio/)
+- [Backend repository](https://github.com/JesperTAndersen/MaintenanceLog)
 
 ## Features
 
