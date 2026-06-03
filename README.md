@@ -7,7 +7,7 @@ It is a single-page application that authenticates with JWT and consumes the bac
 
 - Deployed application: https://mlf.heltsort.dk/
 - Routes overview: https://maintenancelog.heltsort.dk/routes
-- Project overview video (max 5 min): TO BE ADDED
+- Project overview video (4 min): [VideoLink](https://youtu.be/FXqS-REKt-w)
 - Portfolio: https://jespertandersen.github.io/Portfolio/
 - Backend repository: https://github.com/JesperTAndersen/MaintenanceLog
 
