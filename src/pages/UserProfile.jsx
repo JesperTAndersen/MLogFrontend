@@ -65,9 +65,12 @@ function UserProfile() {
 
   if (loading)
     return <FeedbackMessage type="loading" message="Loading assets..." />;
-  if (error) return <FeedbackMessage type="error" message={error} />;
+
+  if (error) 
+    return <FeedbackMessage type="error" message={error} />;
+  
   if (!user)
-    return <FeedbackMessage type="loading" message="Profile not found..." />;
+    return <FeedbackMessage type="error" message="Profile not found..." />;
 
   const fullName = [user.firstName, user.lastName].filter(Boolean).join(" ");
   const roleClass = ROLE_BADGE_CLASS[user.role] ?? styles.roleAUTHENTICATED;
