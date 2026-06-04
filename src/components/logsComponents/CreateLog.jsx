@@ -64,7 +64,7 @@ function CreateLog() {
   return (
     <form onSubmit={submitLog} className={styles.form}>
       <label className={formStyles.label}>
-        Performed date
+        Performed date *
         <input
           type="datetime-local"
           value={performedDate}

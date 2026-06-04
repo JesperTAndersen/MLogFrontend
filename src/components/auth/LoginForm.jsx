@@ -35,6 +35,7 @@ function LoginForm() {
           onChange={setEmail}
           placeholder="Employee@mail.com"
           required
+          hideRequired
         ></InputField>
         <InputField
           label="Password"
@@ -43,6 +44,7 @@ function LoginForm() {
           onChange={setPassword}
           placeholder="***********"
           required
+          hideRequired
         ></InputField>
         <Button buttonText="Login"></Button>
         {error && <p className={styles.error}>{error}</p>}

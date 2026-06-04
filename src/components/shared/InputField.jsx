@@ -1,11 +1,11 @@
 import formStyles from "../../styles/forms.module.css";
 
-function InputField({ label, type, value, onChange, placeholder, required }) {
+function InputField({ label, type, value, onChange, placeholder, required, hideRequired = false }) {
   return (
     <>
       <label className={formStyles.label}>
         {label}
-        {required ? <span> *</span> : null}
+        {required && !hideRequired ? <span> *</span> : null}
         <input
           type={type}
           value={value}
