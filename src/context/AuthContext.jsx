@@ -24,7 +24,7 @@ export default function AuthProvider({ children }) {
       ADMIN: ["ADMIN", "MANAGER", "TECHNICIAN", "AUTHENTICATED"],
       MANAGER: ["MANAGER", "TECHNICIAN", "AUTHENTICATED"],
       TECHNICIAN: ["TECHNICIAN", "AUTHENTICATED"],
-      AUTHENTICATED: ['AUTHENTICATED']
+      AUTHENTICATED: ["AUTHENTICATED"],
     };
     const userRoles = roleHierarchy[authUser.role] || [];
     return userRoles.includes(requiredRole);
