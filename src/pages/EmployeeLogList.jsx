@@ -5,7 +5,7 @@ import { getLogsForEmployee } from "../utils/logApi";
 import LogCard from "../components/logsComponents/LogCard";
 import Select from "../components/shared/Select";
 import styles from "./AssetDetail.module.css";
-import feedbackStyles from "../styles/feedback.module.css";
+import FeedbackMessage from "../components/shared/FeedbackMessage";
 
 const LOG_STATUS_FILTER_OPTIONS = [
   { value: "", label: "All" },
@@ -82,15 +82,9 @@ function EmployeeLogList() {
     setAssetNameFilter(value === "" ? null : value);
   }
 
-  if (loading) return <h1>Loading logs…</h1>;
-  if (error)
-    return (
-      <div className={styles.page}>
-        <section className={feedbackStyles.card}>
-          <p className={feedbackStyles.errorText}>{error}</p>
-        </section>
-      </div>
-    );
+  if (loading)
+    return <FeedbackMessage type="loading" message="Loading logs..." />;
+  if (error) return <FeedbackMessage type="error" message={error} />;
 
   const fullName = [employee.firstName, employee.lastName]
     .filter(Boolean)

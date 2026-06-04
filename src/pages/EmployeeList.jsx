@@ -3,21 +3,21 @@ import EmployeeCard from "../components/employees/EmployeeCard";
 import Select from "../components/shared/Select";
 import styles from "./AssetList.module.css";
 import { getEmployees } from "../utils/employeeApi";
-import feedbackStyles from "../styles/feedback.module.css";
+import FeedbackMessage from "../components/shared/FeedbackMessage";
 
 const EMPLOYEE_STATUS_FILTER_OPTIONS = [
-    { value: "null", label: "All" },
-    { value: "true", label: "Active" },
-    { value: "false", label: "Inactive" },
-  ];
+  { value: "null", label: "All" },
+  { value: "true", label: "Active" },
+  { value: "false", label: "Inactive" },
+];
 
-  const EMPLOYEE_ROLE_FILTER_OPTIONS = [
-    { value: "null", label: "All" },
-    { value: "AUTHENTICATED", label: "Auth Employee" },
-    { value: "TECHNICIAN", label: "Technician" },
-    { value: "MANAGER", label: "Manager" },
-    { value: "ADMIN", label: "Admin" },
-  ];
+const EMPLOYEE_ROLE_FILTER_OPTIONS = [
+  { value: "null", label: "All" },
+  { value: "AUTHENTICATED", label: "Auth Employee" },
+  { value: "TECHNICIAN", label: "Technician" },
+  { value: "MANAGER", label: "Manager" },
+  { value: "ADMIN", label: "Admin" },
+];
 
 function EmployeeList() {
   const [employees, setEmployees] = useState([]);
@@ -26,7 +26,9 @@ function EmployeeList() {
   const [activeFilter, setActiveFilter] = useState(null);
   const [roleFilter, setRoleFilter] = useState(null);
 
-  const visibleEmployees = employees.filter(emp => roleFilter ? emp.role === roleFilter : true)
+  const visibleEmployees = employees.filter((emp) =>
+    roleFilter ? emp.role === roleFilter : true,
+  );
 
   useEffect(() => {
     async function fetchEmployees() {
@@ -42,23 +44,18 @@ function EmployeeList() {
     fetchEmployees();
   }, [activeFilter]);
 
- function statusFilter(e) {
-   const value = e.target.value;
-   setActiveFilter(value === "null" ? null : value === "true");
- }
+  function statusFilter(e) {
+    const value = e.target.value;
+    setActiveFilter(value === "null" ? null : value === "true");
+  }
 
-   function rolesFilter(e) {
+  function rolesFilter(e) {
     const value = e.target.value;
     setRoleFilter(value === "null" ? null : value);
   }
-
-  if (loading) return <h1>Loading employees…</h1>;
-  if (error)
-    return (
-      <section className={feedbackStyles.card}>
-        <p className={feedbackStyles.errorText}>{error}</p>
-      </section>
-    );
+  if (loading)
+    return <FeedbackMessage type="loading" message="Loading employees..." />;
+  if (error) return <FeedbackMessage type="error" message={error} />;
 
   return (
     <>

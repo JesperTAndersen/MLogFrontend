@@ -16,3 +16,12 @@
   line-height: 1.35;
   color: var(--color-error);
 }
+
+.loadingText {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  line-height: 1.35;
+  color: var(--color-text);
+}

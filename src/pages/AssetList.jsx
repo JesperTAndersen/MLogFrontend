@@ -3,7 +3,7 @@ import AssetCard from "../components/assets/AssetCard";
 import Select from "../components/shared/Select";
 import { getAssets } from "../utils/assetApi";
 import styles from "./AssetList.module.css";
-import feedbackStyles from "../styles/feedback.module.css";
+import FeedbackMessage from "../components/shared/FeedbackMessage";
 
 const ASSET_STATUS_FILTER_OPTIONS = [
   { value: "null", label: "All" },
@@ -37,13 +37,9 @@ function AssetList() {
     else setActiveFilter(value === "true");
   }
 
-  if (loading) return <h1>Loading assets…</h1>;
-  if (error)
-    return (
-      <section className={feedbackStyles.card}>
-        <p className={feedbackStyles.errorText}>{error}</p>
-      </section>
-    );
+  if (loading)
+    return <FeedbackMessage type="loading" message="Loading assets..." />;
+  if (error) return <FeedbackMessage type="error" message={error} />;
 
   return (
     <>

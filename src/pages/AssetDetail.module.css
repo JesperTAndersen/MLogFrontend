@@ -87,14 +87,12 @@
   text-decoration: none;
   color: var(--color-inverse-text);
   background: var(--color-primary);
-  border: 1px solid
-    color-mix(in srgb, var(--color-primary) 70%, var(--color-border));
+  border: 1px solid color-mix(in srgb, var(--color-primary) 70%, var(--color-border));
 }
 
 .createLog:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 3px
-    color-mix(in srgb, var(--color-primary-light) 25%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary-light) 25%, transparent);
 }
 
 .logs {

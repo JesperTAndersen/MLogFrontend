@@ -40,6 +40,9 @@ function getPageTitleFromPath(pathname, authUser) {
   if (pathname.startsWith("/assets/") && pathname.endsWith("/logs")) {
     return "Asset Logs";
   }
+   if (pathname.startsWith("/assets/") && pathname.endsWith("/createlog")) {
+     return "Create Log";
+   }
 
   return null;
 }

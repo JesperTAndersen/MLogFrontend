@@ -8,7 +8,7 @@ import styles from "./AssetDetail.module.css";
 import { formatDateTime } from "../utils/formatDateTime";
 import { useAuth } from "../context/authContext";
 import AssetAdminActions from "../components/assets/AssetAdminActions";
-import feedbackStyles from "../styles/feedback.module.css";
+import FeedbackMessage from "../components/shared/FeedbackMessage";
 
 const LOG_STATUS_FILTER_OPTIONS = [
   { value: "", label: "All" },
@@ -81,17 +81,9 @@ function AssetDetail() {
     const value = e.target.value;
     setStatusFilter(value === "" ? null : value);
   }
-
-  if (loading) return <h1>Loading asset…</h1>;
-
-  if (error)
-    return (
-      <div className={styles.page}>
-        <section className={feedbackStyles.card}>
-          <p className={feedbackStyles.errorText}>{error}</p>
-        </section>
-      </div>
-    );
+  if (loading)
+    return <FeedbackMessage type="loading" message="Loading asset..." />;
+  if (error) return <FeedbackMessage type="error" message={error} />;
 
   return (
     <div className={styles.page}>
