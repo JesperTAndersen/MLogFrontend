@@ -26,8 +26,8 @@ function Login() {
   return (
     <div className={styles.page}>
       <div className={styles.brand}>
+        <img className={styles.RPMan} src="/rpman2.png" alt="RPMan" />
         <h1 className={styles.brandTitle}>Rapid Maintenance</h1>
-        <p className={styles.brandSubtitle}>Maintenance Log</p>
       </div>
 
       <LoginForm />
