@@ -1,4 +1,4 @@
-import { Outlet, useLocation } from "react-router";
+import { Outlet, useLocation, useParams } from "react-router";
 import { useState } from "react";
 import DrawerMenu from "./DrawerMenu";
 import NavBar from "./NavBar";
@@ -28,26 +28,32 @@ function getUserLabel(authReady, authUser) {
   return fullName || "User";
 }
 
-function getPageTitleFromPath(pathname, authUser) {
+function getPageTitleFromPath(pathname, authUser, id) {
   if (pathname === "/assets") return "Assets";
   if (pathname === "/employees") return "Employees";
-  if (pathname === "/employees/me") return "Profile";
+  if (pathname === "/employees/me") return "Your Profile";
   if (pathname === "/logs") return "Search Log";
   if (pathname === "/assets/create") return "Create Asset";
   if (pathname === "/employees/create") return "Create Employee";
 
-  if (authUser?.id && pathname === `/employees/${authUser.id}`) return "Profile";
+  if (id && pathname === `/employees/${id}`) {
+    return authUser?.id === Number(id) ? "Your Profile" : "Employee Profile";
+  }
   if (pathname.startsWith("/assets/") && pathname.endsWith("/logs")) {
     return "Asset Logs";
   }
-   if (pathname.startsWith("/assets/") && pathname.endsWith("/createlog")) {
-     return "Create Log";
-   }
+  if (pathname.startsWith("/employees/") && pathname.endsWith("/logs")) {
+    return `Logs by Employee #${id}`;
+  }
+  if (pathname.startsWith("/assets/") && pathname.endsWith("/createlog")) {
+    return "Create Log";
+  }
 
   return null;
 }
 
 function Header() {
+  const { id } = useParams();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { authUser, authReady } = useAuth();
   const { pathname } = useLocation();
@@ -57,7 +63,7 @@ function Header() {
 
   const closeMenu = () => setIsMenuOpen(false);
   const toggleMenu = () => setIsMenuOpen((prev) => !prev);
-  const pageTitle = getPageTitleFromPath(pathname, authUser);
+  const pageTitle = getPageTitleFromPath(pathname, authUser, id);
 
   return (
     <>

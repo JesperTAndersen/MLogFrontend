@@ -5,6 +5,15 @@ import { formatDateTime } from "../../utils/formatDateTime";
 
 function toStatusLabel(status) {
   if (!status) return "";
+
+  if (String(status) === "DONE") {
+    return "Approved".replaceAll("_", " ");
+  }
+  
+  if (String(status) === "FAILED") {
+    return "Pending".replaceAll("_", " ");
+  }
+
   return String(status).replaceAll("_", " ");
 }
 
@@ -16,7 +25,7 @@ function LogCard({ log, showAssetName = false }) {
     log?.status === "DONE"
       ? styles.statusSuccess
       : log?.status === "FAILED"
-        ? styles.statusError
+        ? styles.statusPending
         : "";
   const performedDateText = formatDateTime(log?.performedDate);
   const assetId = log?.assetId ?? null;
@@ -28,10 +37,7 @@ function LogCard({ log, showAssetName = false }) {
   const toggleExpanded = () => setExpanded((prev) => !prev);
 
   return (
-    <div
-      className={styles.card}
-      onClick={toggleExpanded}
-    >
+    <div className={styles.card} onClick={toggleExpanded}>
       <div className={styles.top}>
         <p className={styles.task} title={log?.taskType ?? ""}>
           {log?.taskType ?? "Log"}

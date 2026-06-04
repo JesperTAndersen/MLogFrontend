@@ -9,19 +9,10 @@ import { formatDateTime } from "../utils/formatDateTime";
 import { useAuth } from "../context/authContext";
 import AssetAdminActions from "../components/assets/AssetAdminActions";
 import FeedbackMessage from "../components/shared/FeedbackMessage";
-
-const LOG_STATUS_FILTER_OPTIONS = [
-  { value: "", label: "All" },
-  { value: "FAILED", label: "Failed" },
-  { value: "DONE", label: "Done" },
-];
-
-const LOG_TASK_TYPE_FILTER_OPTIONS = [
-  { value: "", label: "All" },
-  { value: "MAINTENANCE", label: "Maintenance" },
-  { value: "PRODUCTION", label: "Production" },
-  { value: "ERROR", label: "Error" },
-];
+import {
+  LOG_STATUS_FILTER_OPTIONS,
+  LOG_TASK_TYPE_FILTER_OPTIONS,
+} from "../utils/constants/filterOptions";
 
 function AssetDetail() {
   const [asset, setAsset] = useState(null);

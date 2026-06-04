@@ -7,19 +7,10 @@ import Select from "../shared/Select";
 import TextAreaField from "../shared/TextAreaField";
 import formStyles from "../../styles/forms.module.css";
 import styles from "./CreateLog.module.css";
-
-const STATUS_OPTIONS = [
-  { value: "", label: "Select status" },
-  { value: "DONE", label: "Done" },
-  { value: "FAILED", label: "Failed" },
-];
-
-const TASK_TYPE_OPTIONS = [
-  { value: "", label: "Select task type" },
-  { value: "MAINTENANCE", label: "Maintenance" },
-  { value: "PRODUCTION", label: "Production" },
-  { value: "ERROR", label: "Error" },
-];
+import {
+  LOG_STATUS_CREATING,
+  LOG_TASK_TYPE_FILTER_OPTIONS,
+} from "../../utils/constants/filterOptions";
 
 function CreateLog() {
   const navigate = useNavigate();
@@ -88,7 +79,7 @@ function CreateLog() {
         labelText="Status"
         value={status}
         onChange={(e) => setStatus(e.target.value)}
-        options={STATUS_OPTIONS}
+        options={LOG_STATUS_CREATING}
         required
       />
 
@@ -96,7 +87,7 @@ function CreateLog() {
         labelText="Task type"
         value={taskType}
         onChange={(e) => setTaskType(e.target.value)}
-        options={TASK_TYPE_OPTIONS}
+        options={LOG_TASK_TYPE_FILTER_OPTIONS}
         required
       />
 

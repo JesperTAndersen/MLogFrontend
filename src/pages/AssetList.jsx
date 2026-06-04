@@ -4,12 +4,7 @@ import Select from "../components/shared/Select";
 import { getAssets } from "../utils/assetApi";
 import styles from "./AssetList.module.css";
 import FeedbackMessage from "../components/shared/FeedbackMessage";
-
-const ASSET_STATUS_FILTER_OPTIONS = [
-  { value: "null", label: "All" },
-  { value: "true", label: "Active" },
-  { value: "false", label: "Inactive" },
-];
+import { ASSET_STATUS_FILTER_OPTIONS } from "../utils/constants/filterOptions";
 
 function AssetList() {
   const [assets, setAssets] = useState([]);

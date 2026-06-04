@@ -38,8 +38,7 @@ function EditProfileForm({ user, isEditing, onCancelEditing, onUserUpdated }) {
     const lastName = String(formData.get("lastName") ?? "").trim();
     const email = String(formData.get("email") ?? "").trim();
     const phone = String(formData.get("phone") ?? "").trim();
-    const role =  String(formData.get("role") ?? "").trim()
-      
+    const role = String(formData.get("role") ?? "").trim();
 
     if (!firstName) return setEditError("First name is required.");
     if (!lastName) return setEditError("Last name is required.");
@@ -112,15 +111,13 @@ function EditProfileForm({ user, isEditing, onCancelEditing, onUserUpdated }) {
         defaultValue={user.phone ?? ""}
       />
 
-      
-        <Select
-          labelText="Role"
-          name="role"
-          defaultValue={user.role ?? ""}
-          options={roleOptions}
-          required
-        />
-      
+      <Select
+        labelText="Role"
+        name="role"
+        defaultValue={user.role ?? ""}
+        options={roleOptions}
+        required
+      />
 
       {editError ? (
         <p className={`${formStyles.message} ${formStyles.error}`}>

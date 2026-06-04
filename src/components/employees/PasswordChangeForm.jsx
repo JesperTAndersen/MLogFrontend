@@ -89,7 +89,9 @@ function PasswordChangeForm({ employeeId, isVisible }) {
           </p>
         ) : null}
 
-        <Button buttonText={changingPassword ? "Updating…" : "Update password"} />
+        <Button
+          buttonText={changingPassword ? "Updating…" : "Update password"}
+        />
       </form>
     </section>
   );

@@ -86,6 +86,12 @@
   border-color: color-mix(in srgb, var(--color-error) 30%, var(--color-border));
 }
 
+.statusPending {
+  color: var(--color-warning);
+  background: var(--color-warning-bg);
+  border-color: color-mix(in srgb, var(--color-warning) 30%, var(--color-border));
+}
+
 .meta {
   display: flex;
   align-items: baseline;

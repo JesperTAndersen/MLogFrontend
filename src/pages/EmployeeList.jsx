@@ -4,20 +4,10 @@ import Select from "../components/shared/Select";
 import styles from "./AssetList.module.css";
 import { getEmployees } from "../utils/employeeApi";
 import FeedbackMessage from "../components/shared/FeedbackMessage";
-
-const EMPLOYEE_STATUS_FILTER_OPTIONS = [
-  { value: "null", label: "All" },
-  { value: "true", label: "Active" },
-  { value: "false", label: "Inactive" },
-];
-
-const EMPLOYEE_ROLE_FILTER_OPTIONS = [
-  { value: "null", label: "All" },
-  { value: "AUTHENTICATED", label: "Auth Employee" },
-  { value: "TECHNICIAN", label: "Technician" },
-  { value: "MANAGER", label: "Manager" },
-  { value: "ADMIN", label: "Admin" },
-];
+import {
+  EMPLOYEE_STATUS_FILTER_OPTIONS,
+  EMPLOYEE_ROLE_FILTER_OPTIONS,
+} from "../utils/constants/filterOptions";
 
 function EmployeeList() {
   const [employees, setEmployees] = useState([]);
@@ -53,6 +43,7 @@ function EmployeeList() {
     const value = e.target.value;
     setRoleFilter(value === "null" ? null : value);
   }
+
   if (loading)
     return <FeedbackMessage type="loading" message="Loading employees..." />;
   if (error) return <FeedbackMessage type="error" message={error} />;
